@@ -1,0 +1,162 @@
+import React, { useMemo, useState } from "react";
+import "../Home/Home.css";
+import "../Header/Header.css";
+import { IoMdClose } from "react-icons/io";
+import cart from "../../assets/cart.svg";
+import cart1 from "../../assets/cart1.svg";
+import mainCart from "../../assets/cart-main.svg";
+import { useDispatch, useSelector } from "react-redux";
+import "./SideNav.css";
+import { cartActions } from "../../features/redux/cartSlice";
+import { useHistory } from "react-router-dom";
+
+const SideNav = () => {
+  const [sideNav, setSideNav] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const cartItems = useSelector((state) => state.cart.items);
+  const allProducts = useSelector((state) => state.bazar.allProducts);
+
+  const formatter = new Intl.NumberFormat("en");
+
+  const cartData = useMemo(
+    () =>
+      cartItems.map((item) => ({
+        itemData: allProducts.find((product) => product.id === item.id),
+        ...item,
+      })),
+    [cartItems, allProducts]
+  );
+
+  const totalQuantity = useMemo(
+    () => cartData.reduce((total, item) => total + item.quantity, 0),
+    [cartData]
+  );
+ 
+
+  const totalPrice = useMemo(
+    () =>
+      cartData.reduce(
+        (total, item) => total + item.itemData.price * item.quantity,
+        0
+      ),
+    [cartData]
+  );
+
+  const addItemHandler = (item) => {
+    dispatch(cartActions.increaseItemQuantity(item));
+  };
+
+  const deleteItemHandler = (item) => {
+    dispatch(cartActions.removeItemsFromCart(item));
+  };
+
+  const subtractItemHandler = (item) => {
+    dispatch(cartActions.decreaseItemQuantity(item));
+  };
+
+  const checkoutHandler = () => {
+    if (cartData.length > 0) {
+      history.push("/checkout");
+    } else {
+      return;
+    }
+  };
+
+  return (
+    <div>
+      <div onClick={() => setSideNav(!sideNav)} className="cart">
+        <span>
+          <span>
+            <img src={cart} alt="" />
+          </span>
+          {totalQuantity} Item(s)
+        </span>
+        <button>${formatter.format(totalPrice)}</button>
+      </div>
+      <div className="cart-column">
+        <div className={!sideNav ? "sidenav" : "sidenav active"}>
+          <div>
+            <div className="top">
+              <div>
+                <span>
+                  <span>
+                    <img src={cart1} alt="" />
+                  </span>
+                  {totalQuantity} Item(s)
+                </span>
+              </div>
+              <div className="close-icon">
+                <IoMdClose onClick={() => setSideNav(!sideNav)} />
+              </div>
+            </div>
+            {cartData.map((item) => (
+              <div key={item.id} className="cart-products">
+                <div className="cart-left">
+                  <div className="left-button">
+                    <div>
+                      <span onClick={() => addItemHandler(item.id)}>+</span>
+                    </div>
+                    <p>{item.quantity}</p>
+                    <div>
+                      <span onClick={() => subtractItemHandler(item.id)}>
+                        -
+                      </span>
+                    </div>
+                  </div>
+                  <div className="left-logo">
+                    <img
+                      src={`https://pickbazar.batarin.dev${item.itemData.photos[0].url}`}
+                      alt=""
+                    />
+                  </div>
+                  <div className="left-price">
+                    <div className="name-price">
+                      <p>{item.itemData.name}</p>
+                    </div>
+                    <p className="mid-price">${item.itemData.price}</p>
+                    <div className="quantity-left">
+                      <span>
+                        {item.quantity} x {item.itemData.size}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="cart-right">
+                  <p>${item.itemData.price} </p>
+                  <i>
+                    <IoMdClose
+                      onClick={() => deleteItemHandler(item.id)}
+                      className="closed-icon"
+                    />
+                  </i>
+                </div>
+              </div>
+            ))}
+            {cartItems.length > 0 ? (
+              ""
+            ) : (
+              <div className="middle">
+                <div className="cart-icon">
+                  <img src={mainCart} alt="" />
+                </div>
+                <div>
+                  <p>No Products found</p>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="bottom">
+            <button onClick={checkoutHandler}>
+              <span className="text">Checkout</span>
+              <span className="price">${formatter.format(totalPrice)}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SideNav;

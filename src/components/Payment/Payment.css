@@ -1,0 +1,85 @@
+.payment .header-input {
+  display: none;
+}
+
+.payment-form {
+  padding-top: 20px;
+  background: #f7f7f7;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.forms {
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  padding: 30px 60px;
+  margin-bottom: 10px;
+  width: 700px;
+}
+
+.form-top {
+  width: 100%;
+}
+
+.form-header h3,
+.form-header p {
+  padding-bottom: 30px;
+}
+
+.form-top h3,
+.form-mid h3 {
+  color: #0d1136;
+  font-family: var(--font-primary);
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.form-mid h3 {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.form-top p,
+.flex p {
+  color: #424561;
+  font-size: 15px;
+  font-family: var(--font-secondary);
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex h5 {
+  padding-bottom: 10px;
+  color: #0d1136;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--font-secondary);
+}
+
+.details-mid {
+  display: flex;
+}
+
+.lefts {
+  padding-right: 100px;
+}
+
+.lefts h5 {
+  padding-bottom: 20px;
+  color: #0d1136;
+  font-weight: bold;
+  font-size: 15px;
+  font-family: var(--font-secondary);
+}
+
+.rights p {
+  color: #424561;
+  font-size: 15px;
+  font-family: var(--font-secondary);
+  padding-bottom: 20px;
+}
