@@ -6,8 +6,12 @@ import { cartActions } from "../../features/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCard } from "../../features/redux/bazarSlice";
 
+/** TODO: неиспользуемая пропса */
 const CardSingle = ({ singleProduct }) => {
   const dispatch = useDispatch();
+  /** TODO: покопай в сторону либки reselect, и выноси все селекторы в отдельный файл
+   * И в целом наверно стоит переименовать все из card в singleProduct. Не совсем понятно чего конкретно карточка это
+   */
   const card = useSelector((state) => state.bazar.card);
 
   useEffect(() => {
@@ -20,6 +24,7 @@ const CardSingle = ({ singleProduct }) => {
 
   return (
     <div className="containers">
+      {/** TODO: Хм, а если у тебя это Single компонент, почему тогда выводится в массиве? */}
       {card.map((card) => (
         <div key={card.id} className="card">
           <Link to={`${card.id}`}>

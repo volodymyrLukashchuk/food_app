@@ -14,6 +14,10 @@ const Card = ({ products }) => {
 
   return (
     <div className="container">
+      {/** TODO: Пересмотри концепцию контейнеров/компонентов. Этот "компонент" можно переделать в просто компорнент, котороый будет отвечать за рендер конкретно
+       * карточки, и обернуть его в другой компонент, который как раз будет доставать продукты из редакса, делать products.map и выводить в нем только один
+       * компонент.
+       */}
       {products.map((product) => (
         <div key={product.id} className="card">
           <Link to={`product/${product.id}`}>
@@ -48,6 +52,7 @@ const Card = ({ products }) => {
           <div className="card-bottom">
             <p>${product.price}</p>
             <div>
+              {/** TODO: так же ты сможешь избавиться от этой анонимной функции в рендере  */}
               <button onClick={() => addToCartHandler(product.id)}>
                 <span>
                   <IoBagRemove />

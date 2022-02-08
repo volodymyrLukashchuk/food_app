@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 const AuthRedirect = () => {
+  /** TODO: не храни в коде того, чего у тебя не используется */
   const params = useParams();
   const location = useLocation();
 
@@ -9,6 +10,7 @@ const AuthRedirect = () => {
   const accessToken = urlParams.get("access_token");
 
   useEffect(() => {
+    /** TODO: А почему через fetch решил делать? */
     fetch(
       `https://pickbazar.batarin.dev/auth/google/callback?access_token=${accessToken}`,
       {

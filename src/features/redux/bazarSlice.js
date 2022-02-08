@@ -51,6 +51,7 @@ export const getSingleProduct = createAsyncThunk(
 );
 
 export const getCard = createAsyncThunk("card/getCard", async () => {
+  /** посмотри каким образом можно в axios через объект проставлять query params  */
   const res = await bazarApi.get(
     `products?_where[_or][0][category]=1&_where[_or][1][category.parentCategory.id]=7&_start=0&_limit=10`
   );

@@ -77,7 +77,10 @@ const Shop = () => {
   const getLastProductsHandler = () => {
     dispatch(getLastProducts());
   };
-
+  
+  /** такое лучше тоже хранить в отдельном файле. А вообще ты это ловко придумал xD Я обычно говорю всем из фигмы экспортить) Но все равно молодец что такой
+   * способ нашел
+   */
   const icons = [
     { id: 1, src: faLemon },
     { id: 4, src: faDrumstickBite },

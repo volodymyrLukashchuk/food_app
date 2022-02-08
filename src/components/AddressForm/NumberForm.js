@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../Checkout/Checkout.css";
 
+/** TODO: С этой формой аналогично */
 const NumberForm = ({
   number,
   setNumber,

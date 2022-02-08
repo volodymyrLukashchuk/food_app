@@ -62,6 +62,7 @@ const Payment = () => {
               </div>
               <div>
                 <h5>Date</h5>
+                {/** по поводу дат покопай библиотеку luxon */}
                 <p>{today.toLocaleDateString("en-US", options)}</p>
               </div>
               <div>

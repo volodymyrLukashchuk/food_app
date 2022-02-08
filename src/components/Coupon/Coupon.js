@@ -10,6 +10,7 @@ import {
   ButtonBack,
   ButtonNext,
 } from "pure-react-carousel";
+/** такие css файлы лучше импортить в index.js файле */
 import "pure-react-carousel/dist/react-carousel.es.css";
 
 const Coupon = () => {
@@ -32,6 +33,7 @@ const Coupon = () => {
       <Slider>
         <Slide index={0}>
           <div className="coupons">
+            {/** по логике внутри coupons.map у тебя должен быть уже <Slide /> компонент */}
             {coupons.map((coupon) => (
               <div
                 style={{

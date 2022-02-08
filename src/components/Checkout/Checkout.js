@@ -31,6 +31,7 @@ const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const product = useSelector((state) => state.bazar.allProducts);
 
+  /** TODO: Это собственно можно в селекторы вынести */
   const cartData = useMemo(
     () =>
       cartItems.map((item) => ({
@@ -40,6 +41,7 @@ const Checkout = () => {
     [cartItems, product]
   );
 
+  /** TODO: и это */
   const totalPrice = useMemo(
     () =>
       cartData.reduce(
@@ -49,6 +51,7 @@ const Checkout = () => {
     [cartData]
   );
 
+  /** TODO: и это  */
   const discount = useMemo(
     () =>
       cartData.reduce(
@@ -71,6 +74,9 @@ const Checkout = () => {
     setShowOrder(!showOrder);
   };
 
+  /** Компонент в идеале данные должен брать только из сторы, а сторы в свою очередь откуда нужно уже. Попробуй реализовать хранение данных о юзерах с помощью
+   * redux-persist https://redux-toolkit.js.org/usage/usage-guide#use-with-redux-persist
+   */
   let data = JSON.parse(localStorage.getItem("user-info"));
 
   let email = data.email;
@@ -80,6 +86,7 @@ const Checkout = () => {
 
     let data = { address, phone, products: items, when, email };
 
+    /** Запросы так же в компонентах лучше не делать, все через стору. И замени fetch на axios */
     let req = await fetch("https://pickbazar.batarin.dev/orders", {
       method: "POST",
       headers: {
@@ -117,6 +124,7 @@ const Checkout = () => {
     setAllNumbers(allNumbers.filter((item) => item.id !== num));
   };
 
+  /** Эти данные лучше хранить в каком-то отедьном файле */
   const timeMid = [
     {
       id: 1,
@@ -153,8 +161,10 @@ const Checkout = () => {
     },
   ];
 
+  /** так же попробуй форму через react-hook-form сделать. По сути это форма, только у тебя считай чекбоксы вместо инпутов */
   return (
     <div className="checkout">
+      {/** попробуй хедер вытащить так, чтоб он рендерился всего один раз в приложении */}
       <Header />
 
       <div className="checkout-form">

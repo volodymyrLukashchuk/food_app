@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+/** TODO: лучше делить стили конкретно по компонентам, не стоит импортить стили от другого компонента. */
 import "../Checkout/Checkout.css";
 
 
@@ -20,6 +21,7 @@ const AddressForm = ({
   const addressFormSubmit = (e) => {
     e.preventDefault();
 
+    /** TODO: Лишний код лучше не оставлять */
     // if (!address) {
     //   setAddressError("Address is required");
     //   setShowError(!showError);
@@ -50,8 +52,10 @@ const AddressForm = ({
   };
 
   return (
+    /** TODO: покопай в сторону либы clsx */
     <div className={showError ? "new-address-form" : "new-address-form active"}>
       <h3>Add New Address</h3>
+      {/** TODO: переделай пожалуйста форму на библиотеку react-hook-form */}
       <form onSubmit={addressFormSubmit}>
         <input
           value={addressTitle}
