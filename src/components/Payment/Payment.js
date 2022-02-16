@@ -1,53 +1,21 @@
 import React from "react";
 import { useLocation } from "react-router";
 import "./Payment.css";
-import Header from "../Header/Header";
 import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import { DateTime } from "luxon";
+import {
+  discountSelector,
+  totalPriceSelector,
+} from "../../features/redux/selector";
 
 const Payment = () => {
-  const cartItems = useSelector((state) => state.cart.items);
-  const product = useSelector((state) => state.bazar.allProducts);
-
   const data = useLocation();
 
-  const cartData = useMemo(
-    () =>
-      cartItems.map((item) => ({
-        itemData: product.find((product) => product.id === item.id),
-        ...item,
-      })),
-    [cartItems, product]
-  );
-
-  const discount = useMemo(
-    () =>
-      cartData.reduce(
-        (total, item) => item.itemData.finalPrice * item.quantity,
-        0
-      ),
-    [cartData]
-  );
-
-  const totalPrice = useMemo(
-    () =>
-      cartData.reduce(
-        (total, item) => total + item.itemData.price * item.quantity,
-        0
-      ),
-    [cartData]
-  );
-
-  let options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  let today = new Date();
+  const totalPrice = useSelector(totalPriceSelector);
+  const discount = useSelector(discountSelector);
 
   return (
     <div className="payment">
-      <Header />
       <div className="payment-form">
         <div className="forms">
           <div className="form-top">
@@ -62,7 +30,7 @@ const Payment = () => {
               </div>
               <div>
                 <h5>Date</h5>
-                <p>{today.toLocaleDateString("en-US", options)}</p>
+                <p>{DateTime.now().toFormat("MMMM dd, yyyy")}</p>
               </div>
               <div>
                 <h5>Total</h5>
@@ -83,15 +51,9 @@ const Payment = () => {
                   <h5>Delivery Location:</h5>
                 </div>
                 <div className="rights">
-                  <p>{today.toLocaleDateString("en-US", options)}</p>
+                  <p>{DateTime.now().toFormat("MMMM dd, yyyy")}</p>
                   <p>
-                    {today.toLocaleString("en-US", {
-                      hour: "numeric",
-                      minute: "numeric",
-                      hour12: true,
-                    })}{" "}
-                    &nbsp;
-                    {today.toLocaleDateString("en-US")}
+                    {DateTime.now().toLocaleString(DateTime.DATETIME_SHORT)}
                   </p>
                   <p>{data.state.when}</p>
                   <p>{data.state.address}</p>

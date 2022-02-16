@@ -1,36 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ImFacebook2 } from "react-icons/im";
 import { BsGoogle } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 
 import "./LoginModal.css";
 import Home from "../Home/Home";
+import bazarApi from "../../features/api/bazarApi";
 
 const LoginModal = () => {
   const history = useHistory();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    if (localStorage.getItem("user-info")) {
-    }
-  }, []);
-
   const loginHandler = async (e) => {
     e.preventDefault();
 
     let item = { identifier, password };
-    let req = await fetch("https://pickbazar.batarin.dev/auth/local", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    });
-    const res = await req.json();
-    localStorage.setItem("user-info", JSON.stringify(res));
+    const res = await bazarApi.post("auth/local/", item);
+    localStorage.setItem("user-info", JSON.stringify(res.data));
 
-    if (res.user) {
+    if (res.data.user) {
       history.push("/user");
     } else {
       return;

@@ -1,5 +1,3 @@
-import Home from "./components/Home/Home";
-
 import {
   BrowserRouter,
   BrowserRouter as Router,
@@ -15,12 +13,15 @@ import Checkout from "./components/Checkout/Checkout";
 import Payment from "./components/Payment/Payment";
 import Product from "./components/Product/Product";
 import AuthRedirect from "./components/AuthRedirect/AuthRedirect";
+import Home from "./components/Home/Home";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Router>
+          <Header />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/signup" component={SignupModal} />

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import "../Home/Home.css";
 import "../Header/Header.css";
 import { IoMdClose } from "react-icons/io";
@@ -9,40 +9,25 @@ import { useDispatch, useSelector } from "react-redux";
 import "./SideNav.css";
 import { cartActions } from "../../features/redux/cartSlice";
 import { useHistory } from "react-router-dom";
+import {
+  cartItemsSelector,
+  cartDataSelector,
+  totalPriceSelector,
+  totalQuantitySelector,
+} from "../../features/redux/selector";
 
 const SideNav = () => {
   const [sideNav, setSideNav] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const cartItems = useSelector((state) => state.cart.items);
-  const allProducts = useSelector((state) => state.bazar.allProducts);
+  const cartItems = useSelector(cartItemsSelector);
+  const cartData = useSelector(cartDataSelector);
+  const totalPrice = useSelector(totalPriceSelector);
+  const totalQuantity = useSelector(totalQuantitySelector);
+
 
   const formatter = new Intl.NumberFormat("en");
-
-  const cartData = useMemo(
-    () =>
-      cartItems.map((item) => ({
-        itemData: allProducts.find((product) => product.id === item.id),
-        ...item,
-      })),
-    [cartItems, allProducts]
-  );
-
-  const totalQuantity = useMemo(
-    () => cartData.reduce((total, item) => total + item.quantity, 0),
-    [cartData]
-  );
- 
-
-  const totalPrice = useMemo(
-    () =>
-      cartData.reduce(
-        (total, item) => total + item.itemData.price * item.quantity,
-        0
-      ),
-    [cartData]
-  );
 
   const addItemHandler = (item) => {
     dispatch(cartActions.increaseItemQuantity(item));

@@ -1,7 +1,6 @@
 import React from "react";
 import Coupon from "../Coupon/Coupon";
 import Shop from "../Shop/Shop";
-import Header from "../Header/Header";
 
 import "./Home.css";
 
@@ -9,7 +8,6 @@ const Home = () => {
   return (
     <>
       <div className="home">
-        <Header />
         <div className="inner-text">
           <h2>Groceries Delivered in 90 Minute</h2>
           <span>

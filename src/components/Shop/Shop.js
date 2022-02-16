@@ -10,26 +10,19 @@ import {
 import { HiMinus } from "react-icons/hi";
 import Card from "../Card/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { icons } from "../../features/extraData";
 import {
-  faHeartbeat,
-  faLemon,
-  faDrumstickBite,
-  faCookieBite,
-  faPaw,
-  faHouseUser,
-  faCheese,
-  faBreadSlice,
-  faBacon,
-  faGlassMartiniAlt,
-} from "@fortawesome/free-solid-svg-icons";
+  categoriesSelector,
+  productsSelector,
+} from "../../features/redux/selector";
 
 const Shop = () => {
   const [activeCategoriesIds, setActiveCategoriesIds] = useState([]);
   const [activeChildCategoriesIds, setActiveChildCategoriesIds] = useState([]);
 
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.bazar.categories);
-  const products = useSelector((state) => state.bazar.products);
+  const categories = useSelector(categoriesSelector);
+  const products = useSelector(productsSelector);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -77,19 +70,6 @@ const Shop = () => {
   const getLastProductsHandler = () => {
     dispatch(getLastProducts());
   };
-
-  const icons = [
-    { id: 1, src: faLemon },
-    { id: 4, src: faDrumstickBite },
-    { id: 7, src: faCookieBite },
-    { id: 16, src: faPaw },
-    { id: 21, src: faHouseUser },
-    { id: 28, src: faCheese },
-    { id: 35, src: faBreadSlice },
-    { id: 40, src: faBacon },
-    { id: 47, src: faGlassMartiniAlt },
-    { id: 55, src: faHeartbeat },
-  ];
 
   return (
     <div className="shop">

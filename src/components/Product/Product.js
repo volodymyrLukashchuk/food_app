@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import "./Product.css";
-import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleProduct } from "../../features/redux/bazarSlice";
+import { getSingleProduct, getCard } from "../../features/redux/bazarSlice";
 import { useParams } from "react-router";
 import { IoBagRemove } from "react-icons/io5";
 import { cartActions } from "../../features/redux/cartSlice";
-import CardSingle from "../Card/CardSingle";
+import ProductBottomCard from "../Card/ProductBottomCard";
 
 const Product = () => {
   const { id } = useParams();
@@ -14,6 +13,10 @@ const Product = () => {
   const singleProduct = useSelector((state) =>
     state.bazar.allProducts.find((p) => p.id === +id)
   );
+
+  useEffect(() => {
+    dispatch(getCard());
+  }, [dispatch]);
 
   useEffect(() => {
     if (!singleProduct) {
@@ -29,7 +32,6 @@ const Product = () => {
 
   return (
     <div>
-      <Header />
       <div className="product-page">
         <div className="product-description">
           <div className="description-left">
@@ -77,7 +79,7 @@ const Product = () => {
           </div>
         </div>
         <div className="container">
-          <CardSingle singleProduct={singleProduct} />
+          <ProductBottomCard />
         </div>
       </div>
     </div>

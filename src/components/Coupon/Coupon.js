@@ -10,10 +10,10 @@ import {
   ButtonBack,
   ButtonNext,
 } from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
+import { couponSelector } from "../../features/redux/selector";
 
 const Coupon = () => {
-  const coupons = useSelector((state) => state.bazar.coupons);
+  const coupons = useSelector(couponSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {

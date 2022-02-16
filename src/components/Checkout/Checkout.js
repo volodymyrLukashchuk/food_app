@@ -1,62 +1,37 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import "./Checkout.css";
-import Header from "../Header/Header";
 import visa from "../../assets/visa.svg";
-import editSVG from "../../assets/edit.svg";
 import closeSVG from "../../assets/close.svg";
 import AddressForm from "../AddressForm/AddressForm";
 import NumberForm from "../AddressForm/NumberForm";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { postCheckout } from "../../features/redux/bazarSlice";
+import { timeMid, timeBot } from "../../features/extraData";
+import {
+  cartDataSelector,
+  cartItemsSelector,
+  discountSelector,
+  totalPriceSelector,
+} from "../../features/redux/selector";
+import { useForm, useWatch } from "react-hook-form";
 
 const Checkout = () => {
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
   const [showNewNumberForm, setShowNewNumberForm] = useState(false);
   const [showOrder, setShowOrder] = useState(true);
-  const [active, setActive] = useState(null);
-  const [isActive, setIsActive] = useState(null);
-  const [timeActive, setTimeActive] = useState(null);
 
-  const [addresses, setAddresses] = useState("");
-  const [addressTitle, setAddressTitle] = useState("");
   const [allAddresses, setAllAddresses] = useState([]);
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [when, setWhen] = useState("");
 
-  const [number, setNumber] = useState("");
-  const [numberTitle, setNumberTitle] = useState("");
   const [allNumbers, setAllNumbers] = useState([]);
 
-  const cartItems = useSelector((state) => state.cart.items);
-  const product = useSelector((state) => state.bazar.allProducts);
+  const dispatch = useDispatch();
 
-  const cartData = useMemo(
-    () =>
-      cartItems.map((item) => ({
-        itemData: product.find((product) => product.id === item.id),
-        ...item,
-      })),
-    [cartItems, product]
-  );
+  const cartData = useSelector(cartDataSelector);
+  const totalPrice = useSelector(totalPriceSelector);
+  const discount = useSelector(discountSelector);
 
-  const totalPrice = useMemo(
-    () =>
-      cartData.reduce(
-        (total, item) => total + item.itemData.price * item.quantity,
-        0
-      ),
-    [cartData]
-  );
-
-  const discount = useMemo(
-    () =>
-      cartData.reduce(
-        (total, item) => item.itemData.finalPrice * item.quantity,
-        0
-      ),
-    [cartData]
-  );
+  const cartItems = useSelector(cartItemsSelector);
 
   const formatter = new Intl.NumberFormat("en");
   const history = useHistory();
@@ -71,42 +46,18 @@ const Checkout = () => {
     setShowOrder(!showOrder);
   };
 
-  let data = JSON.parse(localStorage.getItem("user-info"));
-
-  let email = data.email;
-
   const checkoutHandler = async () => {
     const items = cartItems.map((item) => item.id);
 
-    let data = { address, phone, products: items, when, email };
-
-    let req = await fetch("https://pickbazar.batarin.dev/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    const res = await req.json();
-    localStorage.setItem("user-info", JSON.stringify(res));
-
+    let data = {
+      address: selectedAddress.addre$$,
+      phone: selectedNumber.num,
+      products: items,
+      when: selectedTime.description,
+    };
+    dispatch(postCheckout(data));
     history.push("/payment", data);
-    console.log(res);
-  };
-
-  const addressPickHandler = (add) => {
-    setAddress(add.addre$$);
-    setActive(add.id);
-  };
-
-  const numberPickHandler = (num) => {
-    setPhone(num.num);
-    setIsActive(num.id);
-  };
-
-  const timePickHandler = (time) => {
-    setTimeActive(time.id);
-    setWhen(time.description);
+    console.log(data);
   };
 
   const deleteAddress = (add) => {
@@ -117,46 +68,16 @@ const Checkout = () => {
     setAllNumbers(allNumbers.filter((item) => item.id !== num));
   };
 
-  const timeMid = [
-    {
-      id: 1,
-      title: "Express Delivery",
-      description: "90 min express delivery",
-    },
-    {
-      id: 2,
-      title: "8am-11am",
-      description: "8:00 AM - 11:00 AM",
-    },
-    {
-      id: 3,
-      title: "11am-2pm",
-      description: "11:00 AM - 2:00 PM",
-    },
-  ];
+  const { control, setValue } = useForm({
+    defaultValues: { address: null, number: null, time: null },
+  });
 
-  const timeBot = [
-    {
-      id: 4,
-      title: "2pm-5pm",
-      description: "2:00 PM - 5:00 PM",
-    },
-    {
-      id: 5,
-      title: "5pm-8pm",
-      description: "5:00 PM - 8:00 PM",
-    },
-    {
-      id: 6,
-      title: "8pm-11pm",
-      description: "8:00 PM - 11:00 PM",
-    },
-  ];
+  const selectedAddress = useWatch({ control, name: "address" });
+  const selectedNumber = useWatch({ control, name: "number" });
+  const selectedTime = useWatch({ control, name: "time" });
 
   return (
     <div className="checkout">
-      <Header />
-
       <div className="checkout-form">
         <div className="delivery-info">
           <div className="left">
@@ -173,10 +94,12 @@ const Checkout = () => {
               <div className="address-bottom">
                 {allAddresses.map((add) => (
                   <div
-                    onClick={() => addressPickHandler(add)}
-                    key={add.title}
+                    onClick={() => {
+                      setValue("address", add);
+                    }}
+                    key={add.id}
                     className={
-                      active === add.id
+                      selectedAddress?.id === add.id
                         ? "address-bottom-box actives"
                         : "address-bottom-box"
                     }
@@ -184,7 +107,6 @@ const Checkout = () => {
                     <div className="box-top">
                       <p>{add.title}</p>
                       <div className="address-icons">
-                        {/* <img src={editSVG} alt="" /> */}
                         <img
                           onClick={() => deleteAddress(add.id)}
                           src={closeSVG}
@@ -207,10 +129,12 @@ const Checkout = () => {
               <div className="delivery-mid">
                 {timeMid.map((time) => (
                   <div
-                    onClick={() => timePickHandler(time)}
+                    onClick={() => setValue("time", time)}
                     key={time.id}
                     className={
-                      timeActive === time.id ? "mid-boxz actives" : "mid-box"
+                      selectedTime?.id === time.id
+                        ? "mid-boxz actives"
+                        : "mid-box"
                     }
                   >
                     <p>{time.title}</p>
@@ -221,10 +145,12 @@ const Checkout = () => {
               <div className="delivery-bottom">
                 {timeBot.map((time) => (
                   <div
-                    onClick={() => timePickHandler(time)}
+                    onClick={() => setValue("time", time)}
                     key={time.id}
                     className={
-                      timeActive === time.id ? "mid-boxz actives" : "mid-box"
+                      selectedTime?.id === time.id
+                        ? "mid-boxz actives"
+                        : "mid-box"
                     }
                   >
                     <p>{time.title}</p>
@@ -247,16 +173,17 @@ const Checkout = () => {
               <div className="contact-bottom">
                 {allNumbers.map((num) => (
                   <div
-                    onClick={() => numberPickHandler(num)}
+                    onClick={() => setValue("number", num)}
                     key={num.id}
                     className={
-                      isActive === num.id ? "mid-boxes actives" : "mid-box"
+                      selectedNumber?.id === num.id
+                        ? "mid-boxes actives"
+                        : "mid-box"
                     }
                   >
                     <div className="num-icons-div">
                       <p>{num.title}</p>
                       <div className="address-icons">
-                        {/* <img src={editSVG} alt="" /> */}
                         <img
                           onClick={() => deleteNumber(num.id)}
                           src={closeSVG}
@@ -367,10 +294,6 @@ const Checkout = () => {
               <AddressForm
                 setAllAddresses={setAllAddresses}
                 allAddresses={allAddresses}
-                setAddressTitle={setAddressTitle}
-                addressTitle={addressTitle}
-                addresses={addresses}
-                setAddresses={setAddresses}
                 showNewAddressForm={showNewAddressForm}
                 setShowNewAddressForm={setShowNewAddressForm}
                 showOrder={showOrder}
@@ -379,10 +302,6 @@ const Checkout = () => {
             )}
             {showNewNumberForm && (
               <NumberForm
-                number={number}
-                setNumber={setNumber}
-                numberTitle={numberTitle}
-                setNumberTitle={setNumberTitle}
                 allNumbers={allNumbers}
                 setAllNumbers={setAllNumbers}
                 showNewNumberForm={showNewNumberForm}

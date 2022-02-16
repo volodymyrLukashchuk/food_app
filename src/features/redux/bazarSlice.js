@@ -51,11 +51,24 @@ export const getSingleProduct = createAsyncThunk(
 );
 
 export const getCard = createAsyncThunk("card/getCard", async () => {
-  const res = await bazarApi.get(
-    `products?_where[_or][0][category]=1&_where[_or][1][category.parentCategory.id]=7&_start=0&_limit=10`
-  );
+  const res = await bazarApi.get(`products`, {
+    params: {
+      "_where[_or][0][category]": 1,
+      "_where[_or][1][category.parentCategory.id]": 7,
+      _start: 0,
+      _limit: 10,
+    },
+  });
   return res.data;
 });
+
+export const postCheckout = createAsyncThunk(
+  "checkout/postCheckout",
+  async (data) => {
+    const res = await bazarApi.post("orders", data);
+    return res.data;
+  }
+);
 
 const bazarSlice = createSlice({
   name: "bazar",
@@ -66,6 +79,7 @@ const bazarSlice = createSlice({
     allProducts: [],
     card: [],
     lastProducts: [],
+    checkout: [],
   },
   extraReducers: {
     [getCoupons.fulfilled](state, action) {
@@ -88,6 +102,9 @@ const bazarSlice = createSlice({
     },
     [getLastProducts.fulfilled](state, action) {
       state.products = action.payload;
+    },
+    [postCheckout.fulfilled](state, action) {
+      state.checkout = action.payload;
     },
   },
 });

@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-import "../Checkout/Checkout.css";
+import React from "react";
+import clsx from "clsx";
+import { useForm } from "react-hook-form";
 
 const NumberForm = ({
-  number,
-  setNumber,
-  numberTitle,
-  setNumberTitle,
   allNumbers,
   setAllNumbers,
   showOrder,
@@ -13,59 +10,47 @@ const NumberForm = ({
   showNewNumberForm,
   setShowNewNumberForm,
 }) => {
-  const [addressError, setAddressError] = useState("Title is required!");
 
-  const [showError, setShowError] = useState(false);
-
-  const addressFormSubmit = (e) => {
-    e.preventDefault();
-
-    if (!number) {
-      setAddressError("Number is required!");
-      setShowError(!showError);
-      return;
-    }
-
-    if (!numberTitle) {
-      setAddressError("Title is required!");
-      setShowError(!showError);
-      return;
-    } else {
-      setShowNewNumberForm(!showNewNumberForm);
-      setShowOrder(!showOrder);
-      setNumberTitle("");
-      setNumber("");
-    }
+  
+  const addressFormSubmit = (data) => {
+    setShowNewNumberForm(!showNewNumberForm);
+    setShowOrder(!showOrder);
 
     if (allNumbers.length > 2) return;
-
-    addNumber();
-  };
-
-  const addNumber = () => {
     const id = Math.random();
-    const num = number;
-    const title = numberTitle;
+    const num = data.number;
+    const title = data.numberTitle;
     const active = false;
     const newNumber = { id, title, num, active };
 
     setAllNumbers([...allNumbers, newNumber]);
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const numberStyle = clsx({
+    "new-address-form": errors,
+    "new-address-form active": true,
+  });
+
   return (
-    <div className={showError ? "new-address-form" : "new-address-form active"}>
+    <div className={numberStyle}>
       <h3>Add New Number</h3>
-      <form onSubmit={addressFormSubmit}>
+      <form onSubmit={handleSubmit(addressFormSubmit)}>
         <input
-          value={numberTitle}
-          onChange={(e) => setNumberTitle(e.target.value)}
+          {...register("numberTitle", { required: true })}
           type="text"
           placeholder="Enter title"
         />
-        {showError && <p className="address-error">{addressError}</p>}
+        {errors?.numberTitle && (
+          <p className="address-error">Title is Required!</p>
+        )}
         <input
-          value={number}
-          onChange={(e) => setNumber(e.target.value)}
+          {...register("number")}
           type="text"
           placeholder="Enter a phone number"
         />

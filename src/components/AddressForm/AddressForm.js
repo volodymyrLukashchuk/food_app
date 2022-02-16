@@ -1,69 +1,58 @@
-import React, { useState } from "react";
-import "../Checkout/Checkout.css";
-
+import React from "react";
+import { useForm } from "react-hook-form";
+import clsx from "clsx";
 
 const AddressForm = ({
   allAddresses,
   setAllAddresses,
-  addressTitle,
-  setAddressTitle,
-  addresses,
-  setAddresses,
   setShowNewAddressForm,
   showNewAddressForm,
   showOrder,
   setShowOrder,
 }) => {
-  const [addressError, setAddressError] = useState("Title is required!");
-  const [showError, setShowError] = useState(false);
 
-  const addressFormSubmit = (e) => {
-    e.preventDefault();
+  
+  const addressFormSubmit = (data) => {
+    setShowOrder(!showOrder);
+    setShowNewAddressForm(!showNewAddressForm);
 
-    // if (!address) {
-    //   setAddressError("Address is required");
-    //   setShowError(!showError);
-    //   return;
-    // }
-
-    if (!addressTitle) {
-      setShowError(!showError);
-      setAddressError("Title is required");
-      return;
-    } else {
-      setShowOrder(!showOrder);
-      setShowNewAddressForm(!showNewAddressForm);
-      setAddresses("");
-      setAddressTitle("");
-    }
     if (allAddresses.length > 2) return;
-    addAddress();
-  };
-
-  const addAddress = () => {
-    const title = addressTitle;
-    const addre$$ = addresses;
+    const id = Math.random();
+    const title = data.addressTitle;
+    const addre$$ = data.addresses;
     const active = false;
-    const newAddress = { title, addre$$, active };
+    const newAddress = { id, title, addre$$, active };
 
     setAllAddresses([...allAddresses, newAddress]);
   };
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const addressStyle = clsx({
+    "new-address-form": errors,
+    "new-address-form active": true,
+  });
+
   return (
-    <div className={showError ? "new-address-form" : "new-address-form active"}>
+    <div className={addressStyle}>
       <h3>Add New Address</h3>
-      <form onSubmit={addressFormSubmit}>
+      <form onSubmit={handleSubmit(addressFormSubmit)}>
         <input
-          value={addressTitle}
-          onChange={(e) => setAddressTitle(e.target.value)}
+          {...register("addressTitle", { required: true })}
           type="text"
           placeholder="Enter title"
         />
-        {showError && <p className="address-error">{addressError}</p>}
+        {errors?.addressTitle && (
+          <p className="address-error">Title is Required!</p>
+        )}
+
         <div className="placeholder-input">
           <input
-            value={addresses}
-            onChange={(e) => setAddresses(e.target.value)}
+            {...register("addresses")}
             type="text"
             placeholder="Enter address"
           />

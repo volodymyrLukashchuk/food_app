@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { cartActions } from "../../features/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getCard } from "../../features/redux/bazarSlice";
+import { cardSelector } from "../../features/redux/selector";
 
-const CardSingle = ({ singleProduct }) => {
+const ProductBottomCard = () => {
   const dispatch = useDispatch();
-  const card = useSelector((state) => state.bazar.card);
+  const card = useSelector(cardSelector);
 
   useEffect(() => {
     dispatch(getCard());
@@ -67,4 +68,4 @@ const CardSingle = ({ singleProduct }) => {
   );
 };
 
-export default CardSingle;
+export default ProductBottomCard;
