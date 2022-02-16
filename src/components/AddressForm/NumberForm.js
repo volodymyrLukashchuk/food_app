@@ -10,8 +10,6 @@ const NumberForm = ({
   showNewNumberForm,
   setShowNewNumberForm,
 }) => {
-
-  
   const addressFormSubmit = (data) => {
     setShowNewNumberForm(!showNewNumberForm);
     setShowOrder(!showOrder);
