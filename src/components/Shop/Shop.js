@@ -29,6 +29,9 @@ const Shop = () => {
     dispatch(getAllProducts());
   }, [dispatch]);
 
+  /**
+   * название функций с маленькой буквы нужно
+   */
   const HandleCategoryClick = (categoryId) => {
     if (activeCategoriesIds.includes(categoryId)) {
       setActiveCategoriesIds(
@@ -39,6 +42,9 @@ const Shop = () => {
     }
   };
 
+  /**
+   * Это все можно сделать через селекторы
+   */
   useEffect(() => {
     const activeCategories = activeCategoriesIds.map((c) =>
       categories.find((category) => category.id === c)
@@ -81,11 +87,11 @@ const Shop = () => {
                 className={
                   activeCategoriesIds.includes(category.id) ? "active" : ""
                 }
-                onClick={() => HandleCategoryClick(category.id)}
+                onClick={() => HandleCategoryClick(category.id)} // функция в рендере
               >
                 <FontAwesomeIcon
                   className="category-icons"
-                  key={icons.find((i) => i.id === category.id).id}
+                  key={icons.find((i) => i.id === category.id).id} // вытащи эти два просчета из рендера. "Дешевле" будет делать это один раз, а не два 
                   icon={icons.find((i) => i.id === category.id).src}
                 />
 

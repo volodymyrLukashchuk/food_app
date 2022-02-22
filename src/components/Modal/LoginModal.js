@@ -17,11 +17,17 @@ const LoginModal = () => {
 
     let item = { identifier, password };
     const res = await bazarApi.post("auth/local/", item);
+    /**
+     * пусть данные о юзере хранятся в redux-persist
+     */
     localStorage.setItem("user-info", JSON.stringify(res.data));
 
     if (res.data.user) {
       history.push("/user");
     } else {
+      /**
+       * Абсолютно не нужный else и return
+       */
       return;
     }
   };
@@ -39,12 +45,12 @@ const LoginModal = () => {
             <form onSubmit={loginHandler}>
               <div className="form-inputs">
                 <input
-                  onChange={(e) => setIdentifier(e.target.value)}
+                  onChange={(e) => setIdentifier(e.target.value)} // функция в рендере
                   type="text"
                   placeholder="Your email"
                 />
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)} // функция в рендере
                   type="text"
                   placeholder="Your password"
                 />
@@ -75,6 +81,9 @@ const LoginModal = () => {
             <div className="login-text">
               <p>
                 Don't have an account yet?{" "}
+                {/**
+                 * Функция в рендере
+                 */}
                 <button onClick={() => history.push("/signup")}>Sign Up</button>
               </p>
             </div>
@@ -82,6 +91,9 @@ const LoginModal = () => {
           <div className="password-footer">
             <p>
               Forgot your Password?{" "}
+              {/**
+               * Функция в рендере
+               */}
               <button onClick={() => history.push("/password")}>
                 Reset It
               </button>

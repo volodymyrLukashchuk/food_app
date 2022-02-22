@@ -21,11 +21,17 @@ const SignupModal = () => {
 
     let item = { email, username, password };
     const res = await bazarApi.post("auth/local/register", item);
+    /**
+     * redux-persist
+     */
     localStorage.setItem("user-info", JSON.stringify(res.data));
 
     if (res.data.user) {
       history.push("/user");
     } else {
+      /**
+       * Абсолютно не нужный else и return
+       */
       return;
     }
   };
@@ -38,6 +44,9 @@ const SignupModal = () => {
           <div className="modal-form">
             <div className="modal-close">
               <span>
+                {/**
+                 * Функция в рендере
+                 */}
                 <IoMdClose onClick={() => history.push("/")} />
               </span>
             </div>
@@ -45,6 +54,9 @@ const SignupModal = () => {
               <h2>Sign Up</h2>
               <p>Welcome!</p>
             </div>
+            {/**
+             * react-hook-form
+             */}
             <form onSubmit={loginHandler}>
               <div className={"form-input"}>
                 <input
@@ -106,6 +118,9 @@ const SignupModal = () => {
             <div className="login-text">
               <p>
                 Already have an account?{" "}
+                {/**
+                 * Функция в рендере
+                 */}
                 <button onClick={() => history.push("/login")}>Login</button>
               </p>
             </div>

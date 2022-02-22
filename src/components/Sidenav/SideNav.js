@@ -51,6 +51,9 @@ const SideNav = () => {
 
   return (
     <div>
+      {/**
+       * функция в рендере
+       */}
       <div onClick={() => setSideNav(!sideNav)} className="cart">
         <span>
           <span>
@@ -73,6 +76,9 @@ const SideNav = () => {
                 </span>
               </div>
               <div className="close-icon">
+                {/**
+                 * функция в рендере
+                 */}
                 <IoMdClose onClick={() => setSideNav(!sideNav)} />
               </div>
             </div>
@@ -81,10 +87,16 @@ const SideNav = () => {
                 <div className="cart-left">
                   <div className="left-button">
                     <div>
+                      {/**
+                       * функция в рендере
+                       */}
                       <span onClick={() => addItemHandler(item.id)}>+</span>
                     </div>
                     <p>{item.quantity}</p>
                     <div>
+                      {/**
+                       * функция в рендере
+                       */}
                       <span onClick={() => subtractItemHandler(item.id)}>
                         -
                       </span>
@@ -111,6 +123,9 @@ const SideNav = () => {
                 <div className="cart-right">
                   <p>${item.itemData.price} </p>
                   <i>
+                    {/**
+                       * функция в рендере
+                       */}
                     <IoMdClose
                       onClick={() => deleteItemHandler(item.id)}
                       className="closed-icon"
