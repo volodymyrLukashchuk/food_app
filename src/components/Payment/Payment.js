@@ -30,6 +30,9 @@ const Payment = () => {
               </div>
               <div>
                 <h5>Date</h5>
+                {/**
+                 * luxon библиотека 
+                 */}
                 <p>{DateTime.now().toFormat("MMMM dd, yyyy")}</p>
               </div>
               <div>
@@ -51,8 +54,14 @@ const Payment = () => {
                   <h5>Delivery Location:</h5>
                 </div>
                 <div className="rights">
+                  {/**
+                   * luxon библиотека 
+                   */}
                   <p>{DateTime.now().toFormat("MMMM dd, yyyy")}</p>
                   <p>
+                    {/**
+                     * luxon библиотека 
+                     */}
                     {DateTime.now().toLocaleString(DateTime.DATETIME_SHORT)}
                   </p>
                   <p>{data.state.when}</p>

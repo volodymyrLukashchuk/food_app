@@ -94,6 +94,9 @@ const Checkout = () => {
               <div className="address-bottom">
                 {allAddresses.map((add) => (
                   <div
+                    {/**
+                    * функция в рендере  
+                    */}
                     onClick={() => {
                       setValue("address", add);
                     }}
@@ -107,6 +110,9 @@ const Checkout = () => {
                     <div className="box-top">
                       <p>{add.title}</p>
                       <div className="address-icons">
+                        {/**
+                         * Кидал же ссылоньку на использование svg. Не нужно svg в <img /> запресовывать. + Функция в рендере
+                         */}
                         <img
                           onClick={() => deleteAddress(add.id)}
                           src={closeSVG}
@@ -129,7 +135,7 @@ const Checkout = () => {
               <div className="delivery-mid">
                 {timeMid.map((time) => (
                   <div
-                    onClick={() => setValue("time", time)}
+                    onClick={() => setValue("time", time)} // функция в рендере
                     key={time.id}
                     className={
                       selectedTime?.id === time.id
@@ -145,7 +151,7 @@ const Checkout = () => {
               <div className="delivery-bottom">
                 {timeBot.map((time) => (
                   <div
-                    onClick={() => setValue("time", time)}
+                    onClick={() => setValue("time", time)} // функция в рендере
                     key={time.id}
                     className={
                       selectedTime?.id === time.id
@@ -173,7 +179,7 @@ const Checkout = () => {
               <div className="contact-bottom">
                 {allNumbers.map((num) => (
                   <div
-                    onClick={() => setValue("number", num)}
+                    onClick={() => setValue("number", num)} // функция в рендере
                     key={num.id}
                     className={
                       selectedNumber?.id === num.id
@@ -184,6 +190,9 @@ const Checkout = () => {
                     <div className="num-icons-div">
                       <p>{num.title}</p>
                       <div className="address-icons">
+                        {/**
+                         * 
+                         */}
                         <img
                           onClick={() => deleteNumber(num.id)}
                           src={closeSVG}

@@ -71,7 +71,7 @@ const Header = () => {
           </span>
           <input
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)} // функция в рендере
             onKeyPress={itemSearchHandler}
             type="text"
             placeholder="Search your products from here"
@@ -98,6 +98,9 @@ const Header = () => {
           style={{ display: pathname === "/user" ? "block" : "" }}
         >
           <span className="logo">
+            {/**
+             * функция в рендере
+             */}
             <img onClick={() => setDropdown(!dropdown)} src={logoPic} alt="" />
           </span>
         </div>
@@ -134,6 +137,9 @@ const Header = () => {
         {searchError && (
           <p>
             Try <b>Lime</b> or <b>Fresh Beef</b>
+            {/**
+             * функция в рендере
+             */}
             <span onClick={() => setSearchError(!searchError)}>
               <IoIosClose />
             </span>

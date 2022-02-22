@@ -17,6 +17,7 @@ export const getCategories = createAsyncThunk(
 export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (activeChildCategoriesIds) => {
+    // axios и queryparams
     const url = `products?${activeChildCategoriesIds
       .map((id, indx) => "_where[_or][" + indx + "][category]=" + id)
       .join("&")}&_start=0&_limit=15`;

@@ -64,6 +64,9 @@ const Product = () => {
             </div>
             <div className="description-right-bottom">
               <div className="bottom-btn">
+                {/**
+                 * функция в рендере
+                 */}
                 <button onClick={() => addToCartHandler(singleProduct.id)}>
                   <i>
                     <IoBagRemove />

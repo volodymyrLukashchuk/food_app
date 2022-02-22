@@ -10,6 +10,9 @@ const AuthRedirect = () => {
 
   useEffect(() => {
     const fetchToken = async () => {
+      /**
+       * axios и queryparams.
+       */
       const res = await axios.get(
         `https://pickbazar.batarin.dev/auth/google/callback?access_token=${accessToken}`
       );
@@ -19,6 +22,9 @@ const AuthRedirect = () => {
     fetchToken();
   }, [accessToken]);
 
+  /**
+   * Не обязательно отсюда возвращать <div />. Можно просто null
+   */
   return <div></div>;
 };
 

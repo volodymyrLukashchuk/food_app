@@ -45,6 +45,9 @@ const SingleCard = ({ product }) => {
       <div className="card-bottom">
         <p>${product.price}</p>
         <div>
+          {/**
+           * функция в рендере
+           */}
           <button onClick={() => addToCartHandler(product.id)}>
             <span>
               <IoBagRemove />
