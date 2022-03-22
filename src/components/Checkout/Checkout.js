@@ -20,17 +20,15 @@ const Checkout = () => {
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
   const [showNewNumberForm, setShowNewNumberForm] = useState(false);
   const [showOrder, setShowOrder] = useState(true);
-
   const [allAddresses, setAllAddresses] = useState([]);
-
   const [allNumbers, setAllNumbers] = useState([]);
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userData);
 
   const cartData = useSelector(cartDataSelector);
   const totalPrice = useSelector(totalPriceSelector);
   const discount = useSelector(discountSelector);
-
   const cartItems = useSelector(cartItemsSelector);
 
   const formatter = new Intl.NumberFormat("en");
@@ -50,14 +48,14 @@ const Checkout = () => {
     const items = cartItems.map((item) => item.id);
 
     let data = {
-      address: selectedAddress.addre$$,
+      address: selectedAddress.address,
       phone: selectedNumber.num,
       products: items,
       when: selectedTime.description,
+      email: user.email,
     };
     dispatch(postCheckout(data));
     history.push("/payment", data);
-    console.log(data);
   };
 
   const deleteAddress = (add) => {
@@ -114,7 +112,7 @@ const Checkout = () => {
                         />
                       </div>
                     </div>
-                    <p>{add.addre$$}</p>
+                    <p>{add.address}</p>
                   </div>
                 ))}
               </div>
