@@ -121,7 +121,7 @@ const Shop = () => {
           <Card products={products} />
         </div>
         <div className="load-button">
-          {products.length < 30 ? (
+          {products.length !== 0 && products.length < 30 ? (
             <button onClick={getLastProductsHandler}>Load More</button>
           ) : (
             ""

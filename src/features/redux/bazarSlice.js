@@ -19,7 +19,7 @@ export const getProducts = createAsyncThunk(
   async (activeChildCategoriesIds) => {
     const url = `products?${activeChildCategoriesIds
       .map((id, indx) => "_where[_or][" + indx + "][category]=" + id)
-      .join("&")}&_start=0&_limit=15`;
+      .join("&")}&_start=0&_limit=10`;
 
     const res = await bazarApi.get(url);
     return res.data;
