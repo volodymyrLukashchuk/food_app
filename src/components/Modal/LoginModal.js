@@ -1,32 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { ImFacebook2 } from "react-icons/im";
 import { BsGoogle } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
-
+import ReactDom from "react-dom";
 import "./LoginModal.css";
 import Home from "../Home/Home";
-import bazarApi from "../../features/api/bazarApi";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../features/redux/userSlice";
 
 const LoginModal = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
 
-  const loginHandler = async (e) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      identifier: "",
+    },
+    onSubmit: async (values) => {
+      let item = { identifier: values.identifier, password: values.password };
+      dispatch(getUser(item)).then((res) => {
+        if (!res.error) {
+          history.push("/user");
+        }
+      });
+    },
+  });
 
-    let item = { identifier, password };
-    const res = await bazarApi.post("auth/local/", item);
-    localStorage.setItem("user-info", JSON.stringify(res.data));
-
-    if (res.data.user) {
-      history.push("/user");
-    } else {
-      return;
-    }
-  };
-
-  return (
+  return ReactDom.createPortal(
     <div className="signup-modal">
       <Home />
       <div className="overlay">
@@ -36,20 +38,28 @@ const LoginModal = () => {
               <h2>Welcome Back</h2>
               <p>Login with your email & password</p>
             </div>
-            <form onSubmit={loginHandler}>
+            <form onSubmit={formik.handleSubmit}>
               <div className="form-inputs">
                 <input
-                  onChange={(e) => setIdentifier(e.target.value)}
-                  type="text"
+                  id="identifier"
+                  name="identifier"
+                  type="email"
                   placeholder="Your email"
+                  onChange={formik.handleChange}
+                  value={formik.values.identifier}
                 />
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="text"
+                  id="password"
+                  name="password"
+                  type="password"
                   placeholder="Your password"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
                 />
               </div>
-              <button className="continue-btn">Continue</button>
+              <button type="submit" className="continue-btn">
+                Continue
+              </button>
             </form>
           </div>
           <div className="modal-bottom">
@@ -65,7 +75,13 @@ const LoginModal = () => {
                 </span>
                 Continue with Facebook
               </button>
-              <button className="continuegoogle-btn">
+              <button
+                onClick={() =>
+                  (window.location.href =
+                    "https://pickbazar.batarin.dev/connect/google")
+                }
+                className="continuegoogle-btn"
+              >
                 <span>
                   <BsGoogle />
                 </span>
@@ -89,7 +105,8 @@ const LoginModal = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("portal")
   );
 };
 

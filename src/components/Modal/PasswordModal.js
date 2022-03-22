@@ -1,13 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router";
 import Home from "../Home/Home";
-
+import ReactDom from "react-dom";
 import "./PasswordModal.css";
 
 const PasswordModal = () => {
   const history = useHistory();
 
-  return (
+  return ReactDom.createPortal(
     <div className="signup-modal">
       <Home />
       <div className="overlay">
@@ -34,7 +34,8 @@ const PasswordModal = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("portal")
   );
 };
 
