@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 
 const AuthRedirect = () => {
   const location = useLocation();
+  const history = useHistory();
 
   const urlParams = new URLSearchParams(location.search);
   const accessToken = urlParams.get("access_token");
@@ -14,10 +15,10 @@ const AuthRedirect = () => {
         `https://pickbazar.batarin.dev/auth/google/callback?access_token=${accessToken}`
       );
       localStorage.setItem("jwt", res.data.jwt);
-      return res.data;
+      history.push("/user");
     };
     fetchToken();
-  }, [accessToken]);
+  }, [accessToken, history]);
 
   return <div></div>;
 };
