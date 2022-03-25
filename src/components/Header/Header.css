@@ -1,0 +1,108 @@
+.header {
+  padding: 10px 20px;
+  height: 68px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-lang {
+  color: red;
+}
+
+.bazar-logo img {
+  padding-right: 30px;
+}
+
+.header button {
+  background-color: var(--main);
+  color: white;
+  border: none;
+  width: 66px;
+  height: 37px;
+  border-radius: 6px;
+  font-style: var(--font-secondary);
+  font-weight: 700;
+  font-style: normal;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.header-input {
+  background: #f3f3f3;
+  border-radius: 6px;
+  width: 550px;
+  height: 48px;
+  border: none;
+  display: flex;
+  padding-left: 15px;
+  align-items: center;
+  margin-right: 700px;
+  font-style: var(--font-primary);
+}
+
+.header-input input {
+  border: none;
+  width: 100%;
+  font-size: 15px;
+  background: #f3f3f3;
+  padding-left: 15px;
+  font-style: var(--font-secondary);
+}
+
+.header-input input:focus {
+  outline: none;
+}
+
+.header-input span {
+  color: #77798c;
+  width: 14px;
+  height: 14px;
+}
+
+.header .lang {
+  display: none;
+}
+
+.user button {
+  display: none;
+}
+
+.header .logo-div {
+  display: none;
+}
+
+.error {
+  position: absolute;
+  left: 700px;
+  top: 15px;
+  transition: 0.8s ease-in-out;
+}
+
+.error p {
+  font-family: var(--font-secondary);
+  color: #77798c;
+  font-size: 15px;
+  background: #f3f3f3;
+  padding: 12px 24px;
+  border-radius: 50px;
+}
+
+.error b {
+  color: var(--main);
+}
+
+.active-error {
+  left: -300px;
+  transition: 0.8s ease-in-out;
+}
+
+.error span {
+  color: red;
+  font-size: 25px;
+  position: absolute;
+  cursor: pointer;
+  top: 0px;
+}

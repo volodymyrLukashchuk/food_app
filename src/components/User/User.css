@@ -1,0 +1,116 @@
+.lang button {
+  border: none;
+  background: transparent;
+  color: var(--main);
+  border: 1px solid #f1f1f1;
+  box-sizing: border-box;
+  border-radius: 6px;
+  margin-right: 20px;
+  width: 97px;
+  height: 38px;
+  border-radius: 6px;
+  font-style: var(--font-secondary);
+  font-weight: 700;
+  font-style: normal;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lang img {
+  width: 20px;
+  margin-right: 7px;
+}
+.lang span {
+  vertical-align: middle;
+  align-self: center;
+  padding-top: 3px;
+}
+
+.logo img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  right: 20px;
+  top: 61px;
+  height: 228px;
+  width: 200px;
+}
+
+.dropdown ul {
+  list-style-type: none;
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  font-weight: bold;
+  color: #0d1136;
+  background: #ffffff;
+  box-shadow: 0px 3px 20px rgba(142, 142, 142, 0.14);
+  border-radius: 6px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.dropdown li {
+  padding: 15px 30px;
+}
+
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dropdown a {
+  text-decoration: none;
+  color: #0d1136;
+}
+
+.logo-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.triangle {
+  position: absolute;
+  margin-right: 30px;
+  width: 16px;
+}
+
+.triangle img {
+  position: absolute;
+  height: 9px;
+  width: 16p;
+  bottom: -2px;
+  left: 172px;
+}
+
+.user .logo-div {
+  display: block;
+}
+
+
+
+@media screen and (max-width: 720px) {
+  .dropdown {
+    display: flex;
+    align-items: flex-start;
+    height: 180px;
+    width: 200px;
+    margin-right: 100px;
+  }
+
+  .dropdown li {
+    padding: 10px;
+    width: 300px;
+  }
+}

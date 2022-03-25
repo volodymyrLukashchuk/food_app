@@ -1,0 +1,132 @@
+.product-page {
+  background: #f7f7f7;
+  padding: 20px 10px;
+}
+
+.product-description {
+  display: flex;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.description-left {
+  background: #ffffff;
+  width: 50%;
+  height: 250px;
+}
+
+.description-right {
+  background: #ffffff;
+  width: 50%;
+  border-left: 2px solid #f7f7f7;
+  height: 250px;
+  padding: 15px 30px;
+  padding-bottom: 45px;
+}
+
+.description-right-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.description-right h3 {
+  color: #000000;
+  font-family: var(--font-primary);
+  font-weight: bold;
+  font-size: 21px;
+  padding-right: 40px;
+}
+
+.description-right span {
+  color: var(--main);
+  font-size: 16px;
+  font-weight: bold;
+  font-family: var(--font-secondary);
+}
+
+.quantity {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #77798c;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: var(--font-secondary);
+}
+
+.description-right-mid {
+  color: #424561;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: var(--font-secondary);
+}
+
+.main-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-pic img {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 220px;
+  height: 160px;
+  object-fit: contain;
+}
+
+.bottom-pic {
+  display: flex;
+  justify-content: center;
+}
+
+.bottom-pic img {
+  width: 85px;
+  border: 1px solid #f1f1f1;
+  border-radius: 6px;
+  margin-right: 10px;
+  object-fit: contain;
+  height: 85px;
+}
+
+.bottom-pic img:hover {
+  border: 2px solid #009e7f;
+}
+
+.bottom-btn button {
+  margin-top: 7px;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: var(--font-secondary);
+  border: none;
+  background: #ffffff;
+  border: 1px solid #f7f7f7;
+  border-radius: 85px;
+  padding: 6px 16px;
+  color: var(--main);
+}
+
+.bottom-btn button i {
+  padding-right: 5px;
+  font-size: 10px;
+}
+
+.bottom-btn button:hover {
+  color: #ffffff;
+  background: var(--main);
+}
+
+.description-category {
+  padding-top: 20px;
+}
+
+.description-category span {
+  background: #f7f7f7;
+  border-radius: 6px;
+  color: #0d1136;
+  font-size: 13px;
+  font-family: var(--font-secondary);
+  font-weight: bold;
+  padding: 6px 14px;
+  margin-right: 20px;
+}
