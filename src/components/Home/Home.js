@@ -1,12 +1,6 @@
 import React from "react";
-import ReactDom from "react-dom";
-
-import { Switch, Route } from "react-router-dom";
 
 import Coupon from "../Coupon/Coupon";
-import PasswordModal from "../Modal/ResetPasswordModal";
-import SignInModal from "../Modal/SignInModal";
-import SignUpModal from "../Modal/SignUpModal";
 import Shop from "../Shop/Shop";
 
 import "./Home.css";
@@ -25,15 +19,6 @@ const Home = () => {
       </div>
       <Coupon />
       <Shop />
-
-      {ReactDom.createPortal(
-        <Switch>
-          <Route path="/login" component={SignInModal} />
-          <Route path="/signup" component={SignUpModal} />
-          <Route path="/password" component={PasswordModal} />
-        </Switch>,
-        document.getElementById("portal")
-      )}
     </>
   );
 };

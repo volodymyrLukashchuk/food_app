@@ -12,6 +12,9 @@ import Product from "./components/Product/Product";
 import AuthRedirect from "./components/AuthRedirect/AuthRedirect";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
+import SignUpModal from "./components/Modal/SignUpModal";
+import SignInModal from "./components/Modal/SignInModal";
+import PasswordModal from "./components/Modal/ResetPasswordModal";
 
 function App() {
   return (
@@ -20,7 +23,10 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route path="/" component={Home} />
+            <Route path="/" exact component={Home} />
+            <Route path="/login" component={SignInModal} />
+            <Route path="/signup" component={SignUpModal} />
+            <Route path="/password" component={PasswordModal} />
             <Route path="/user" component={User} />
             <Route path="/profile" component={Profile} />
             <Route path="/checkout" component={Checkout} />
