@@ -5,6 +5,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import store, { persistor } from "./features/redux/store";
 

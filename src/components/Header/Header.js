@@ -1,26 +1,34 @@
-import React, { useState } from "react";
-import "./Header.css";
+import React, { useState, useContext } from "react";
 import { BiSearch } from "react-icons/bi";
-import { useHistory, useLocation } from "react-router-dom";
-import flag from "../../assets/flag.svg";
+import { useHistory, useLocation, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { IoIosClose } from "react-icons/io";
+import { allProductsSelector } from "../../features/redux/selector";
+
 import triangle from "../../assets/triangle.svg";
 import logoPic from "../../assets/logo-pic.png";
 import bazar from "../../assets/bazar.svg";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { IoIosClose } from "react-icons/io";
-import { allProductsSelector } from "../../features/redux/selector";
+import flag from "../../assets/flag.svg";
+
+import { userActions } from "../../features/redux/userSlice";
+import SignUpModal from "../Modal/SignUpModal";
+import { ModalContext } from "../../App";
+
+import "./Header.css";
 
 const Header = () => {
   const history = useHistory();
   const { pathname } = useLocation();
-
+  const dispatch = useDispatch();
 
   const [dropdown, setDropdown] = useState(false);
   const [title, setTitle] = useState("");
   const [searchError, setSearchError] = useState(false);
 
+  const [showSignUpModal, setShowSignUpModal] = useState("");
+
   const products = useSelector(allProductsSelector);
+  const user = useSelector((state) => state.user.userData);
   const searchData = products.find((product) => product.name === title);
 
   const itemSearchHandler = (e) => {
@@ -57,13 +65,22 @@ const Header = () => {
         : "",
   };
 
+  const clearStorage = () => {
+    dispatch(userActions.logout());
+    setDropdown(!dropdown);
+  };
+
+  const showDropdown = () => {
+    setDropdown(!dropdown);
+  };
+
+  const { showModal } = useContext(ModalContext);
+
   return (
     <>
       <div className="header" style={headerStyle}>
         <div className="bazar-logo">
-          <Link to="/">
-            <img src={bazar} alt="" />
-          </Link>
+          <img src={bazar} alt="" />
         </div>
         <div className="header-input">
           <span>
@@ -88,48 +105,53 @@ const Header = () => {
         </div>
 
         <button
-          style={{ display: pathname === "/user" ? "none" : "" }}
-          onClick={() => history.push("/signup")}
+          style={{
+            display: user ? "none" : "",
+          }}
+          onClick={() => showModal("signup")}
         >
           Join
         </button>
-        <div
-          className="logo-div"
-          style={{ display: pathname === "/user" ? "block" : "" }}
-        >
+
+        <div className="logo-div" style={{ display: user ? "block" : "" }}>
           <span className="logo">
             <img onClick={() => setDropdown(!dropdown)} src={logoPic} alt="" />
           </span>
         </div>
 
         {dropdown && (
-          <section
-            className="dropdown"
-            style={{ display: pathname === "/user" ? "" : "none" }}
-          >
+          <section className="dropdown" style={{ display: user ? "" : "none" }}>
             <span className="triangle">
               <img src={triangle} alt="" />
             </span>
             <ul>
-              <Link to="/profile">
+              <Link onClick={showDropdown} to="/profile">
                 <li>Profile</li>
               </Link>
               <hr />
-              <Link to="/checkout">
+              <Link onClick={showDropdown} to="/checkout">
                 <li>Checkout</li>
               </Link>
               <hr />
-              <Link to="/profile">
+              <Link onClick={showDropdown} to="/profile">
                 <li>Order</li>
               </Link>
               <hr />
-              <Link to="/login">
-                <li className="last">Logout</li>
+              <Link to="/">
+                <li onClick={clearStorage} className="last">
+                  Logout
+                </li>
               </Link>
             </ul>
           </section>
         )}
       </div>
+      {showSignUpModal && (
+        <SignUpModal
+          setShowSignUpModal={setShowSignUpModal}
+          showSignUpModal={showSignUpModal}
+        />
+      )}
       <div className={searchError ? "error" : "active-error error"}>
         {searchError && (
           <p>

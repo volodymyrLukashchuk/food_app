@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://pickbazar.batarin.dev/",
+  baseURL: process.env.REACT_APP_BASE_URL,
 });

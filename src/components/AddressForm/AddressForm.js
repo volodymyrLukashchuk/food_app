@@ -10,8 +10,6 @@ const AddressForm = ({
   showOrder,
   setShowOrder,
 }) => {
-
-  
   const addressFormSubmit = (data) => {
     setShowOrder(!showOrder);
     setShowNewAddressForm(!showNewAddressForm);
@@ -19,9 +17,9 @@ const AddressForm = ({
     if (allAddresses.length > 2) return;
     const id = Math.random();
     const title = data.addressTitle;
-    const addre$$ = data.addresses;
+    const address = data.addresses;
     const active = false;
-    const newAddress = { id, title, addre$$, active };
+    const newAddress = { id, title, address, active };
 
     setAllAddresses([...allAddresses, newAddress]);
   };

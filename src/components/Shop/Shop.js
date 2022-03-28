@@ -36,6 +36,7 @@ const Shop = () => {
       );
     } else {
       setActiveCategoriesIds([...activeCategoriesIds, categoryId]);
+      setActiveChildCategoriesIds([]);
     }
   };
 
@@ -63,7 +64,7 @@ const Shop = () => {
         activeChildCategoriesIds.filter((id) => categoryId !== id)
       );
     } else {
-      setActiveChildCategoriesIds([...activeChildCategoriesIds, categoryId]);
+      setActiveChildCategoriesIds([categoryId]);
     }
   };
 
@@ -120,7 +121,11 @@ const Shop = () => {
           <Card products={products} />
         </div>
         <div className="load-button">
-          <button onClick={getLastProductsHandler}>Load More</button>
+          {products.length !== 0 && products.length < 30 ? (
+            <button onClick={getLastProductsHandler}>Load More</button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
