@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
-import { getToken } from "../../features/redux/userSlice";
+
+import { googleLogin } from "../../features/redux/user/userThunkActions";
 
 const AuthRedirect = () => {
   const location = useLocation();
@@ -14,11 +14,11 @@ const AuthRedirect = () => {
 
   useEffect(() => {
     const fetchToken = async () => {
-      dispatch(getToken(accessToken));
-      history.push("/user");
+      dispatch(googleLogin(accessToken));
+      history.push("/");
     };
     fetchToken();
-  }, [dispatch, accessToken, history]);
+  }, []);
 
   return null;
 };

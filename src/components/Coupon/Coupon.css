@@ -10,7 +10,7 @@
 .single-coupon {
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 270px;
   height: 230px;
   border-radius: 6px;
   justify-content: space-evenly;
@@ -21,7 +21,7 @@
 .single-coupon button {
   background: #ffffff;
   border-radius: 50px;
-  width: 28%;
+  width: 40%;
   border: none;
   padding: 10px;
   align-items: center;
