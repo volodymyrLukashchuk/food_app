@@ -10,8 +10,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import bazarReducer from "./bazarSlice";
-import cartSlice from "./cartSlice";
+import bazarReducer from "./bazar/bazarSlice";
+import cartSlice from "./cart/cartSlice";
 import userReducer from "./user/userSlice";
 
 const rootReducer = combineReducers({

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { signIn, googleLogin } from "./userThunkActions";
+import { signIn, googleLogin, signUp } from "./userThunkActions";
 
 const userSlice = createSlice({
   name: "user",
@@ -15,6 +15,9 @@ const userSlice = createSlice({
   },
   extraReducers: {
     [signIn.fulfilled](state, action) {
+      state.userData = action.payload.user;
+    },
+    [signUp.fulfilled](state, action) {
       state.userData = action.payload.user;
     },
     [googleLogin.fulfilled](state, action) {

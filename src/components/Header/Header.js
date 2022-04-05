@@ -8,7 +8,8 @@ import logoPic from "../../assets/logo-pic.png";
 import bazar from "../../assets/bazar.svg";
 
 import { userActions } from "../../features/redux/user/userSlice";
-import { cartActions } from "../../features/redux/cartSlice";
+import { userSelector } from "../../features/redux/user/userSelector";
+import { cartActions } from "../../features/redux/cart/cartSlice";
 import AuthModal from "../Modal/AuthModal";
 
 import "./Header.css";
@@ -19,9 +20,9 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const [dropdown, setDropdown] = useState(false);
-  const [modalState, setModalState] = useState("");
-  const user = useSelector((state) => state.user.userData);
+  const [showModal, setShowModal] = useState(false);
 
+  const user = useSelector(userSelector);
   const headerStyle = {
     position: pathname === "/" ? "absolute" : "",
   };
@@ -30,6 +31,7 @@ const Header = () => {
     dispatch(userActions.logout());
     setDropdown(!dropdown);
     dispatch(cartActions.clearCart());
+    setShowModal("");
   };
 
   const showDropdown = () => {
@@ -40,8 +42,10 @@ const Header = () => {
     history.push("/");
   };
 
-  const signUpModalRedirect = () => {
-    setModalState("signup");
+  const closeModal = (event) => {
+    if (event.target.classList.contains("overlay")) {
+      setShowModal(false);
+    }
   };
 
   const renderDropdown = () => {
@@ -86,7 +90,7 @@ const Header = () => {
           <input type="text" placeholder="Search your products from here" />
         </div>
 
-        {user ? "" : <button onClick={signUpModalRedirect}>Join</button>}
+        {user ? null : <button onClick={() => setShowModal(true)}>Join</button>}
 
         {user ? (
           <div className="logo-div">
@@ -94,9 +98,7 @@ const Header = () => {
               <img onClick={showDropdown} src={logoPic} alt="" />
             </span>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
       </>
     );
   };
@@ -104,7 +106,7 @@ const Header = () => {
   return (
     <>
       <div className="header" style={headerStyle}>
-        <AuthModal modalState={modalState} setModalState={setModalState} />
+        {showModal && <AuthModal closeModal={closeModal} />}
         {renderHeader()}
         {dropdown && renderDropdown()}
       </div>

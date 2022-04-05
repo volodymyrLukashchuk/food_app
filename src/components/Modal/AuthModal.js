@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDom from "react-dom";
+import { useSelector } from "react-redux";
 
 import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
 import PasswordModal from "./ResetPasswordModal";
+import { userSelector } from "../../features/redux/user/userSelector";
 
 import { ImFacebook2 } from "react-icons/im";
-import { IoMdClose } from "react-icons/io";
 import { BsGoogle } from "react-icons/bs";
 
 const MODAL_CONFIG = {
@@ -30,15 +31,12 @@ const MODAL_CONFIG = {
   },
 };
 
-const AuthModal = ({ modalState, setModalState }) => {
+const AuthModal = ({ closeModal }) => {
+  const [modalState, setModalState] = useState("signup");
+  const user = useSelector(userSelector);
+
   const googleRedirect = () => {
     window.location.href = `${process.env.REACT_APP_BASE_URL}connect/google`;
-  };
-
-  const closeModal = (event) => {
-    if (event.target.classList.contains("overlay")) {
-      setModalState("");
-    }
   };
 
   const signUpModalRedirect = () => {
@@ -48,18 +46,12 @@ const AuthModal = ({ modalState, setModalState }) => {
   const passwordModalRedirect = () => {
     setModalState("password");
   };
+
   const renderModalHeader = () => {
     return (
       <div className="modals-navbar">
-        {modalState === "signup" ? (
-          <div className="modal-close">
-            <span onClick={() => setModalState("")}>
-              <IoMdClose />
-            </span>
-          </div>
-        ) : null}
-        <h2>{MODAL_CONFIG[modalState].header}</h2>
-        <p>{MODAL_CONFIG[modalState].subHeader}</p>
+        <h2>{MODAL_CONFIG[modalState]?.header}</h2>
+        <p>{MODAL_CONFIG[modalState]?.subHeader}</p>
       </div>
     );
   };
@@ -73,9 +65,7 @@ const AuthModal = ({ modalState, setModalState }) => {
         {modalState === "signin" && (
           <SignInModal setModalState={setModalState} />
         )}
-        {modalState === "password" && (
-          <PasswordModal setModalState={setModalState} />
-        )}
+        {modalState === "password" && <PasswordModal />}
       </>
     );
   };
@@ -110,9 +100,9 @@ const AuthModal = ({ modalState, setModalState }) => {
         ) : null}
         <div className="login-text">
           <p>
-            {MODAL_CONFIG[modalState].footer}{" "}
+            {MODAL_CONFIG[modalState]?.footer}{" "}
             <button onClick={signUpModalRedirect}>
-              {MODAL_CONFIG[modalState].footerButton}
+              {MODAL_CONFIG[modalState]?.footerButton}
             </button>
           </p>
         </div>
@@ -139,22 +129,21 @@ const AuthModal = ({ modalState, setModalState }) => {
 
   return (
     <div>
-      {modalState &&
-        ReactDom.createPortal(
-          <div onClick={closeModal} className="overlay">
-            <div className={"modal-card-contact"}>
-              <div>
-                <div className="modal-form">
-                  {renderModalHeader()}
-                  {renderMainModal()}
-                </div>
-                {renderModalBottom()}
-                {renderSignInModalBottom()}
+      {ReactDom.createPortal(
+        <div onClick={closeModal} className={modalState ? "overlay" : null}>
+          {modalState && (
+            <div className="modal-card-contact">
+              <div className="modal-form">
+                {renderModalHeader()}
+                {renderMainModal()}
               </div>
+              {renderModalBottom()}
+              {renderSignInModalBottom()}
             </div>
-          </div>,
-          document.getElementById("portal")
-        )}
+          )}
+        </div>,
+        document.getElementById("portal")
+      )}
     </div>
   );
 };

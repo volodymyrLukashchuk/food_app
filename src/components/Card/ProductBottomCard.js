@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import "../Shop/Shop.css";
 import { IoBagRemove } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { cartActions } from "../../features/redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getCard } from "../../features/redux/bazarSlice";
-import { cardSelector } from "../../features/redux/selector";
+
+import { cartActions } from "../../features/redux/cart/cartSlice";
+import { getCard } from "../../features/redux/bazar/bazarThunkActions";
+import { cardSelector } from "../../features/redux/bazar/bazarSelector";
 
 const ProductBottomCard = () => {
   const dispatch = useDispatch();

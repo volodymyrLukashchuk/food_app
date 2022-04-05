@@ -7,7 +7,6 @@ export const googleLogin = createAsyncThunk(
     const res = await bazarApi.get(
       `auth/google/callback?access_token=${accessToken}`
     );
-    localStorage.setItem("jwt", res.data.jwt);
     return res.data;
   }
 );
@@ -16,3 +15,10 @@ export const signIn = createAsyncThunk("signin/getSignin", async (item) => {
   const res = await bazarApi.post("auth/local/", item);
   return res.data;
 });
+
+export const signUp = createAsyncThunk("signUp/getSignUp", async (item) => {
+  const res = await bazarApi.post("auth/local/register", item);
+  return res.data;
+});
+
+

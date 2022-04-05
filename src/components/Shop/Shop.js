@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import "./Shop.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAllProducts,
   getCategories,
   getLastProducts,
   getProducts,
-} from "../../features/redux/bazarSlice";
+} from "../../features/redux/bazar/bazarThunkActions";
 import { HiMinus } from "react-icons/hi";
-import Card from "../Card/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { icons } from "../../features/extraData";
 import {
   categoriesSelector,
   productsSelector,
-} from "../../features/redux/selector";
+} from "../../features/redux/bazar/bazarSelector";
+import Card from "../Card/Card";
+
+import "./Shop.css";
 
 const Shop = () => {
   const [activeCategoriesIds, setActiveCategoriesIds] = useState([]);
@@ -123,9 +125,7 @@ const Shop = () => {
         <div className="load-button">
           {products.length !== 0 && products.length < 30 ? (
             <button onClick={getLastProductsHandler}>Load More</button>
-          ) : (
-            ""
-          )}
+          ) : null}
         </div>
       </div>
     </div>

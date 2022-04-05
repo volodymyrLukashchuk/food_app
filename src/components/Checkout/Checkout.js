@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-
 import { useForm, useWatch } from "react-hook-form";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { postCheckout } from "../../features/redux/bazarSlice";
+import { postCheckout } from "../../features/redux/bazar/bazarThunkActions";
 import { timeMid, timeBot } from "../../features/extraData";
 import {
   cartDataSelector,
@@ -27,6 +26,7 @@ const Checkout = () => {
   const [allNumbers, setAllNumbers] = useState([]);
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.user.userData);
 
   const cartData = useSelector(cartDataSelector);
@@ -35,7 +35,6 @@ const Checkout = () => {
   const cartItems = useSelector(cartItemsSelector);
 
   const formatter = new Intl.NumberFormat("en");
-  const history = useHistory();
 
   const addressHandler = () => {
     setShowNewAddressForm(!showNewAddressForm);

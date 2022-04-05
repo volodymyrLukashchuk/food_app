@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import "../Home/Home.css";
-import "../Header/Header.css";
 import { IoMdClose } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import cart from "../../assets/cart.svg";
 import cart1 from "../../assets/cart1.svg";
 import mainCart from "../../assets/cart-main.svg";
-import { useDispatch, useSelector } from "react-redux";
-import "./SideNav.css";
-import { cartActions } from "../../features/redux/cartSlice";
-import { useHistory } from "react-router-dom";
+import { cartActions } from "../../features/redux/cart/cartSlice";
 import {
   cartItemsSelector,
   cartDataSelector,
   totalPriceSelector,
   totalQuantitySelector,
 } from "../../features/redux/selector";
+
+import "./SideNav.css";
+import "../Home/Home.css";
+import "../Header/Header.css";
 
 const SideNav = () => {
   const [sideNav, setSideNav] = useState(false);
@@ -25,7 +27,6 @@ const SideNav = () => {
   const cartData = useSelector(cartDataSelector);
   const totalPrice = useSelector(totalPriceSelector);
   const totalQuantity = useSelector(totalQuantitySelector);
-
 
   const formatter = new Intl.NumberFormat("en");
 

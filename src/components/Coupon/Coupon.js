@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCoupons } from "../../features/redux/bazarSlice";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import "./Coupon.css";
 import {
   CarouselProvider,
   Slider,
@@ -10,7 +8,11 @@ import {
   ButtonBack,
   ButtonNext,
 } from "pure-react-carousel";
-import { couponSelector } from "../../features/redux/selector";
+
+import { getCoupons } from "../../features/redux/bazar/bazarThunkActions";
+import { couponSelector } from "../../features/redux/bazar/bazarSelector";
+
+import "./Coupon.css";
 
 const Coupon = () => {
   const coupons = useSelector(couponSelector);

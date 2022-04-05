@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation } from "react-router";
-import "./Payment.css";
 import { useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import {
@@ -8,8 +7,12 @@ import {
   totalPriceSelector,
 } from "../../features/redux/selector";
 
+import "./Payment.css";
+
 const Payment = () => {
   const data = useLocation();
+
+  console.log(data);
 
   const totalPrice = useSelector(totalPriceSelector);
   const discount = useSelector(discountSelector);

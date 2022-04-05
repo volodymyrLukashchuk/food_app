@@ -1,9 +1,9 @@
 import React from "react";
-import "../Shop/Shop.css";
+import { useDispatch } from "react-redux";
 import { IoBagRemove } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { cartActions } from "../../features/redux/cartSlice";
-import { useDispatch } from "react-redux";
+
+import { cartActions } from "../../features/redux/cart/cartSlice";
 
 const SingleCard = ({ product }) => {
   const dispatch = useDispatch();

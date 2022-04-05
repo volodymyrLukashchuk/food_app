@@ -1,11 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import Coupon from "../Coupon/Coupon";
 import Shop from "../Shop/Shop";
+import SideNav from "../Sidenav/SideNav";
 
 import "./Home.css";
 
 const Home = () => {
+  const user = useSelector((state) => state.user.userData);
+
   return (
     <>
       <div className="home">
@@ -19,6 +23,7 @@ const Home = () => {
       </div>
       <Coupon />
       <Shop />
+      {user ? <SideNav /> : null}
     </>
   );
 };

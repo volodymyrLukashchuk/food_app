@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
-import "./Product.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleProduct, getCard } from "../../features/redux/bazarSlice";
 import { useParams } from "react-router";
 import { IoBagRemove } from "react-icons/io5";
-import { cartActions } from "../../features/redux/cartSlice";
+
+import { cartActions } from "../../features/redux/cart/cartSlice";
+import {
+  getSingleProduct,
+  getCard,
+} from "../../features/redux/bazar/bazarThunkActions";
 import ProductBottomCard from "../Card/ProductBottomCard";
+
+import "./Product.css";
 
 const Product = () => {
   const { id } = useParams();
