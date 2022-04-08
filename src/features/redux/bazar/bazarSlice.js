@@ -50,4 +50,4 @@ const bazarSlice = createSlice({
   },
 });
 
-export default bazarSlice.reducer;
+export const bazarReducer = bazarSlice.reducer;

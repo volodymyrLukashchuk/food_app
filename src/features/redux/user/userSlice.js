@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
 import { signIn, googleLogin, signUp } from "./userThunkActions";
 
@@ -13,19 +13,33 @@ const userSlice = createSlice({
       state.userData = null;
     },
   },
-  extraReducers: {
-    [signIn.fulfilled](state, action) {
-      state.userData = action.payload.user;
-    },
-    [signUp.fulfilled](state, action) {
-      state.userData = action.payload.user;
-    },
-    [googleLogin.fulfilled](state, action) {
-      state.token = action.payload.jwt;
-      state.userData = action.payload.user;
-    },
-  },
+  // extraReducers: {
+  //   [signIn.fulfilled](state, action) {
+  //     state.userData = action.payload.user;
+  //   },
+  //   [signUp.fulfilled](state, action) {
+  //     state.userData = action.payload.user;
+  //   },
+  //   [googleLogin.fulfilled](state, action) {
+  //     state.token = action.payload.jwt;
+  //     state.userData = action.payload.user;
+  //   },
+  // },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      isAnyOf(
+        signIn.fulfilled,
+        signUp.fulfilled,
+        googleLogin.fulfilled
+      ),
+      (state, action) => {
+        state.token = action.payload.jwt;
+        state.userData = action.payload.user;
+      }
+    )
+  }
 });
 
-export default userSlice.reducer;
 export const userActions = userSlice.actions;
+
+export const userReducer = userSlice.reducer;

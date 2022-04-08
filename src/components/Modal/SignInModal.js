@@ -1,25 +1,22 @@
 import React from "react";
 
-import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { signIn } from "../../features/redux/user/userThunkActions";
 
-const SignInModal = ({ setModalState }) => {
+const SignInModal = ({ closeModal }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
       password: "",
       identifier: "",
     },
-    onSubmit: async (values) => {
-      let item = { identifier: values.identifier, password: values.password };
-      const res = await dispatch(signIn(item));
+    onSubmit: (values) => {
+      const item = { identifier: values.identifier, password: values.password };
+      const res = dispatch(signIn(item));
       if (!res.error) {
-        history.push("/");
-        setModalState("");
+        closeModal();
       }
     },
   });

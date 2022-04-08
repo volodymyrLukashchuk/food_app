@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import ReactDom from "react-dom";
-import { useSelector } from "react-redux";
 
 import SignUpModal from "./SignUpModal";
 import SignInModal from "./SignInModal";
 import PasswordModal from "./ResetPasswordModal";
-import { userSelector } from "../../features/redux/user/userSelector";
 
 import { ImFacebook2 } from "react-icons/im";
 import { BsGoogle } from "react-icons/bs";
@@ -33,7 +31,6 @@ const MODAL_CONFIG = {
 
 const AuthModal = ({ closeModal }) => {
   const [modalState, setModalState] = useState("signup");
-  const user = useSelector(userSelector);
 
   const googleRedirect = () => {
     window.location.href = `${process.env.REACT_APP_BASE_URL}connect/google`;
@@ -60,10 +57,10 @@ const AuthModal = ({ closeModal }) => {
     return (
       <>
         {modalState === "signup" && (
-          <SignUpModal setModalState={setModalState} />
+          <SignUpModal closeModal={closeModal} />
         )}
         {modalState === "signin" && (
-          <SignInModal setModalState={setModalState} />
+          <SignInModal closeModal={closeModal} />
         )}
         {modalState === "password" && <PasswordModal />}
       </>
@@ -127,10 +124,16 @@ const AuthModal = ({ closeModal }) => {
     );
   };
 
+  const handleOutsideClick = (event) => {
+    if (event.target.classList.contains("overlay")) {
+      closeModal();
+    }
+  };
+
   return (
     <div>
       {ReactDom.createPortal(
-        <div onClick={closeModal} className={modalState ? "overlay" : null}>
+        <div onClick={handleOutsideClick} className={modalState ? "overlay" : null}>
           {modalState && (
             <div className="modal-card-contact">
               <div className="modal-form">

@@ -31,7 +31,7 @@ const Header = () => {
     dispatch(userActions.logout());
     setDropdown(!dropdown);
     dispatch(cartActions.clearCart());
-    setShowModal("");
+    setShowModal(false);
   };
 
   const showDropdown = () => {
@@ -42,11 +42,9 @@ const Header = () => {
     history.push("/");
   };
 
-  const closeModal = (event) => {
-    if (event.target.classList.contains("overlay")) {
-      setShowModal(false);
-    }
-  };
+  const closeModal = () => {
+    setShowModal(false);
+  }
 
   const renderDropdown = () => {
     return (
