@@ -15,7 +15,6 @@ const SignInModal = ({ closeModal }) => {
     onSubmit: (values) => {
       const item = { identifier: values.identifier, password: values.password };
       const res = dispatch(signIn(item));
-      console.log(res);
       if (!res.error) {
         closeModal();
       }

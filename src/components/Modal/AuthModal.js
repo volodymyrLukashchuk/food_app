@@ -34,12 +34,6 @@ const AuthModal = ({ closeModal }) => {
     setModalState(MODAL_STATE.PASSWORD);
   };
 
-  const handleOutsideClick = (event) => {
-    if (event.target.classList.contains("overlay")) {
-      closeModal();
-    }
-  };
-
   const renderModalHeader = () => {
     return (
       <div className="modals-navbar">
@@ -118,6 +112,12 @@ const AuthModal = ({ closeModal }) => {
         )}
       </>
     );
+  };
+
+  const handleOutsideClick = (event) => {
+    if (event.target.classList.contains("overlay")) {
+      closeModal();
+    }
   };
 
   return (
