@@ -1,16 +1,17 @@
 import axios from "axios";
+import store from "../redux/store";
 
-let store;
+const bazarApi = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+});
 
-export const injectStore = (_store) => {
-  store = _store;
-};
+bazarApi.interceptors.request.use((config) => {
+  const token = store.getState().user.token;
 
-axios.interceptors.request.use((config) => {
-  config.headers.authorization = store.getState().user.token;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
-export default axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-});
+export default bazarApi;

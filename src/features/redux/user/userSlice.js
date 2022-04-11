@@ -1,31 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { signIn, googleLogin, signUp } from "./userThunkActions";
+
+const initialState = {
+  userData: null,
+  token: null,
+  error: null,
+};
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    userData: null,
-    token: null,
-  },
+  initialState,
   reducers: {
     logout(state) {
-      state.userData = null;
+      state.userData = initialState.userData;
+      state.token = initialState.token;
     },
   },
-  extraReducers: {
-    [signIn.fulfilled](state, action) {
-      state.userData = action.payload.user;
-    },
-    [signUp.fulfilled](state, action) {
-      state.userData = action.payload.user;
-    },
-    [googleLogin.fulfilled](state, action) {
-      state.token = action.payload.jwt;
-      state.userData = action.payload.user;
-    },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      isAnyOf(signIn.fulfilled, signUp.fulfilled, googleLogin.fulfilled),
+      (state, action) => {
+        state.token = action.payload.jwt;
+        state.userData = action.payload.user;
+      }
+    );
+    builder.addMatcher(
+      isAnyOf(signIn.rejected, signUp.rejected),
+      (state, action) => {
+        state.error = action.error.message;
+      }
+    );
+    builder.addMatcher(isAnyOf(signIn.pending, signUp.pending), (state) => {
+      state.error = null;
+    });
   },
 });
 
-export default userSlice.reducer;
 export const userActions = userSlice.actions;
+
+export const userReducer = userSlice.reducer;

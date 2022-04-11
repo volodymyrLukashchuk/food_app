@@ -20,5 +20,3 @@ export const signUp = createAsyncThunk("signUp/getSignUp", async (item) => {
   const res = await bazarApi.post("auth/local/register", item);
   return res.data;
 });
-
-

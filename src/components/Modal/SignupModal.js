@@ -1,7 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -10,8 +9,7 @@ import { signUp } from "../../features/redux/user/userThunkActions";
 import "./Modal.css";
 import "react-toastify/dist/ReactToastify.css";
 
-const SignUpModal = ({ setModalState }) => {
-  const history = useHistory();
+const SignUpModal = ({ closeModal }) => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -26,26 +24,25 @@ const SignUpModal = ({ setModalState }) => {
       username: Yup.string().required("Username is Required"),
     }),
     onSubmit: async (values) => {
-      let item = {
+      const item = {
         email: values.email,
         username: values.username,
         password: values.password,
         confirmPassword: values.confirmPassword,
       };
-      const res = await dispatch(signUp(item));
-      if (!res.error) {
+      const response = await dispatch(signUp(item));
+
+      if (!response.error) {
         toast.success("Registration successfull!!");
-        setTimeout(() => setModalState(""), 2000);
-        history.push("/");
+        closeModal();
       } else {
-        toast.error("Try again");
+        toast.error(response.error.message);
       }
     },
   });
 
   return (
     <>
-      <ToastContainer />
       <form onSubmit={formik.handleSubmit}>
         <div className={"form-input"}>
           <input

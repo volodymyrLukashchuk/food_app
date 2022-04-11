@@ -12,6 +12,7 @@ import Product from "./components/Product/Product";
 import AuthRedirect from "./components/AuthRedirect/AuthRedirect";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <BrowserRouter>
         <Router>
           <Header />
+          <ToastContainer />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/checkout" component={Checkout} />
