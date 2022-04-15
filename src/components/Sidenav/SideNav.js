@@ -50,9 +50,90 @@ const SideNav = () => {
     }
   };
 
+  const showSideNav = () => {
+    setSideNav(!sideNav);
+  };
+
+  const renderSideNav = () => {
+    return (
+      <div>
+        <div className="top">
+          <div>
+            <span>
+              <span>
+                <img src={cart1} alt="" />
+              </span>
+              {totalQuantity} Item(s)
+            </span>
+          </div>
+          <div className="close-icon">
+            <IoMdClose onClick={showSideNav} />
+          </div>
+        </div>
+        {cartData.map((item) => renderCartItems(item))}
+        {cartItems.length > 0 ? (
+          ""
+        ) : (
+          <div className="middle">
+            <div className="cart-icon">
+              <img src={mainCart} alt="" />
+            </div>
+            <div>
+              <p>No Products found</p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderCartItems = (item) => {
+    return (
+      <div key={item.id} className="cart-products">
+        <div className="cart-left">
+          <div className="left-button">
+            <div>
+              <span onClick={() => addItemHandler(item.id)}>+</span>
+            </div>
+            <p>{item.quantity}</p>
+            <div>
+              <span onClick={() => subtractItemHandler(item.id)}>-</span>
+            </div>
+          </div>
+          <div className="left-logo">
+            <img
+              src={`https://pickbazar.batarin.dev${item.itemData.photos[0].url}`}
+              alt=""
+            />
+          </div>
+          <div className="left-price">
+            <div className="name-price">
+              <p>{item.itemData.name}</p>
+            </div>
+            <p className="mid-price">${item.itemData.price}</p>
+            <div className="quantity-left">
+              <span>
+                {item.quantity} x {item.itemData.size}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="cart-right">
+          <p>${item.itemData.price} </p>
+          <i>
+            <IoMdClose
+              onClick={() => deleteItemHandler(item.id)}
+              className="closed-icon"
+            />
+          </i>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <div onClick={() => setSideNav(!sideNav)} className="cart">
+      <div onClick={showSideNav} className="cart">
         <span>
           <span>
             <img src={cart} alt="" />
@@ -63,76 +144,7 @@ const SideNav = () => {
       </div>
       <div className="cart-column">
         <div className={!sideNav ? "sidenav" : "sidenav active"}>
-          <div>
-            <div className="top">
-              <div>
-                <span>
-                  <span>
-                    <img src={cart1} alt="" />
-                  </span>
-                  {totalQuantity} Item(s)
-                </span>
-              </div>
-              <div className="close-icon">
-                <IoMdClose onClick={() => setSideNav(!sideNav)} />
-              </div>
-            </div>
-            {cartData.map((item) => (
-              <div key={item.id} className="cart-products">
-                <div className="cart-left">
-                  <div className="left-button">
-                    <div>
-                      <span onClick={() => addItemHandler(item.id)}>+</span>
-                    </div>
-                    <p>{item.quantity}</p>
-                    <div>
-                      <span onClick={() => subtractItemHandler(item.id)}>
-                        -
-                      </span>
-                    </div>
-                  </div>
-                  <div className="left-logo">
-                    <img
-                      src={`https://pickbazar.batarin.dev${item.itemData.photos[0].url}`}
-                      alt=""
-                    />
-                  </div>
-                  <div className="left-price">
-                    <div className="name-price">
-                      <p>{item.itemData.name}</p>
-                    </div>
-                    <p className="mid-price">${item.itemData.price}</p>
-                    <div className="quantity-left">
-                      <span>
-                        {item.quantity} x {item.itemData.size}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="cart-right">
-                  <p>${item.itemData.price} </p>
-                  <i>
-                    <IoMdClose
-                      onClick={() => deleteItemHandler(item.id)}
-                      className="closed-icon"
-                    />
-                  </i>
-                </div>
-              </div>
-            ))}
-            {cartItems.length > 0 ? (
-              ""
-            ) : (
-              <div className="middle">
-                <div className="cart-icon">
-                  <img src={mainCart} alt="" />
-                </div>
-                <div>
-                  <p>No Products found</p>
-                </div>
-              </div>
-            )}
-          </div>
+          {renderSideNav()}
           <div className="bottom">
             <button onClick={checkoutHandler}>
               <span className="text">Checkout</span>

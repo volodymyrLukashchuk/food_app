@@ -74,8 +74,8 @@ const Shop = () => {
     dispatch(getLastProducts());
   };
 
-  return (
-    <div className="shop">
+  const renderCategories = () => {
+    return (
       <div className="categories-left-bar">
         {categories.map((category) => (
           <ul key={category.id} className="category-list">
@@ -118,6 +118,11 @@ const Shop = () => {
           </ul>
         ))}
       </div>
+    );
+  };
+
+  const renderProducts = () => {
+    return (
       <div>
         <div>
           <Card products={products} />
@@ -128,6 +133,12 @@ const Shop = () => {
           ) : null}
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div className="shop">
+      {renderCategories()} {renderProducts()}
     </div>
   );
 };

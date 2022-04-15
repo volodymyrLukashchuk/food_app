@@ -17,8 +17,8 @@ const Payment = () => {
   const totalPrice = useSelector(totalPriceSelector);
   const discount = useSelector(discountSelector);
 
-  return (
-    <div className="payment">
+  const renderPaymentPage = () => {
+    return (
       <div className="payment-form">
         <div className="forms">
           <div className="form-top">
@@ -83,8 +83,10 @@ const Payment = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  return <div className="payment">{renderPaymentPage()}</div>;
 };
 
 export default Payment;

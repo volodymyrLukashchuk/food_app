@@ -7,10 +7,12 @@ import { cartActions } from "../../features/redux/cart/cartSlice";
 import {
   getSingleProduct,
   getCard,
+  getAllProducts,
 } from "../../features/redux/bazar/bazarThunkActions";
-import ProductBottomCard from "../Card/ProductBottomCard";
+import { cardSelector } from "../../features/redux/bazar/bazarSelector";
 
 import "./Product.css";
+import Card from "../Card/Card";
 
 const Product = () => {
   const { id } = useParams();
@@ -19,8 +21,11 @@ const Product = () => {
     state.bazar.allProducts.find((p) => p.id === +id)
   );
 
+  const card = useSelector(cardSelector);
+
   useEffect(() => {
     dispatch(getCard());
+    dispatch(getAllProducts());
   }, [dispatch]);
 
   useEffect(() => {
@@ -31,6 +36,10 @@ const Product = () => {
 
   const addToCartHandler = (item) => {
     dispatch(cartActions.addItemsToCart(item));
+  };
+
+  const addToCart = () => {
+    addToCartHandler(singleProduct.id);
   };
 
   if (!singleProduct) return null;
@@ -69,7 +78,7 @@ const Product = () => {
             </div>
             <div className="description-right-bottom">
               <div className="bottom-btn">
-                <button onClick={() => addToCartHandler(singleProduct.id)}>
+                <button onClick={addToCart}>
                   <i>
                     <IoBagRemove />
                   </i>
@@ -83,8 +92,8 @@ const Product = () => {
             </div>
           </div>
         </div>
-        <div className="container">
-          <ProductBottomCard />
+        <div>
+          <Card products={card} />
         </div>
       </div>
     </div>

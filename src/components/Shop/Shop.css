@@ -61,13 +61,6 @@
   grid-gap: 10px;
 }
 
-.containers {
-  padding-top: 10px;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 62px;
-}
-
 .card {
   background: #ffffff;
   border-radius: 6px;

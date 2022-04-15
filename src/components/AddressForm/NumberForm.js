@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
 
 const NumberForm = ({
@@ -15,11 +16,10 @@ const NumberForm = ({
     setShowOrder(!showOrder);
 
     if (allNumbers.length > 2) return;
-    const id = Math.random();
+    const id = uuidv4();
     const num = data.number;
     const title = data.numberTitle;
-    const active = false;
-    const newNumber = { id, title, num, active };
+    const newNumber = { id, title, num };
 
     setAllNumbers([...allNumbers, newNumber]);
   };
