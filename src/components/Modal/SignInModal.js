@@ -12,9 +12,9 @@ const SignInModal = ({ closeModal }) => {
       password: "",
       identifier: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const item = { identifier: values.identifier, password: values.password };
-      const res = dispatch(signIn(item));
+      const res = await dispatch(signIn(item));
       if (!res.error) {
         closeModal();
       }
