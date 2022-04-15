@@ -1,144 +1,112 @@
 import React, { useState } from "react";
-import "./Header.css";
 import { BiSearch } from "react-icons/bi";
-import { useHistory, useLocation } from "react-router-dom";
-import flag from "../../assets/flag.svg";
+import { useHistory, useLocation, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import triangle from "../../assets/triangle.svg";
 import logoPic from "../../assets/logo-pic.png";
 import bazar from "../../assets/bazar.svg";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { IoIosClose } from "react-icons/io";
-import { allProductsSelector } from "../../features/redux/selector";
+
+import { userActions } from "../../features/redux/user/userSlice";
+import { userSelector } from "../../features/redux/user/userSelector";
+import { cartActions } from "../../features/redux/cart/cartSlice";
+import AuthModal from "../Modal/AuthModal";
+
+import "./Header.css";
 
 const Header = () => {
   const history = useHistory();
   const { pathname } = useLocation();
-
+  const dispatch = useDispatch();
 
   const [dropdown, setDropdown] = useState(false);
-  const [title, setTitle] = useState("");
-  const [searchError, setSearchError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  const products = useSelector(allProductsSelector);
-  const searchData = products.find((product) => product.name === title);
-
-  const itemSearchHandler = (e) => {
-    if (e.key === "Enter" && !searchData) {
-      setSearchError(!searchError);
-    }
-
-    if (e.key === "Enter" && searchData) {
-      history.push(`/product/${searchData.id}`);
-    } else {
-      return;
-    }
-  };
-
+  const user = useSelector(userSelector);
   const headerStyle = {
-    position:
-      pathname === "/" ||
-      pathname === "/signup" ||
-      pathname === "/login" ||
-      pathname === "/user" ||
-      pathname === "/password" ||
-      pathname === "/profile"
-        ? "absolute"
-        : "",
+    position: pathname === "/" ? "absolute" : "",
   };
 
-  const buttonLangStyles = {
-    display:
-      pathname === "/profile" ||
-      pathname === "/signup" ||
-      pathname === "/login" ||
-      pathname === "/password"
-        ? "block"
-        : "",
+  const handleLogout = () => {
+    dispatch(userActions.logout());
+    setDropdown(!dropdown);
+    dispatch(cartActions.clearCart());
+    setShowModal(false);
   };
 
-  return (
-    <>
-      <div className="header" style={headerStyle}>
-        <div className="bazar-logo">
-          <Link to="/">
-            <img src={bazar} alt="" />
+  const showDropdown = () => {
+    setDropdown(!dropdown);
+  };
+
+  const handleHomeButtonClick = () => {
+    history.push("/");
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const renderDropdown = () => {
+    return (
+      <section className="dropdown">
+        <span className="triangle">
+          <img src={triangle} alt="" />
+        </span>
+        <ul>
+          <Link onClick={showDropdown} to="/">
+            <li>Profile</li>
           </Link>
+          <hr />
+          <Link onClick={showDropdown} to="/checkout">
+            <li>Checkout</li>
+          </Link>
+          <hr />
+          <Link onClick={showDropdown} to="/">
+            <li>Order</li>
+          </Link>
+          <hr />
+          <Link to="/">
+            <li onClick={handleLogout} className="last">
+              Logout
+            </li>
+          </Link>
+        </ul>
+      </section>
+    );
+  };
+
+  const renderHeader = () => {
+    return (
+      <>
+        <div onClick={handleHomeButtonClick} className="bazar-logo">
+          <img src={bazar} alt="" />
         </div>
         <div className="header-input">
           <span>
             <BiSearch />
           </span>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onKeyPress={itemSearchHandler}
-            type="text"
-            placeholder="Search your products from here"
-          />
+          <input type="text" placeholder="Search your products from here" />
         </div>
 
-        <div className="lang" style={buttonLangStyles}>
-          <button>
-            <span>
-              <img src={flag} alt="" />
-            </span>
-            English
-          </button>
-        </div>
+        {user ? null : <button onClick={() => setShowModal(true)}>Join</button>}
 
-        <button
-          style={{ display: pathname === "/user" ? "none" : "" }}
-          onClick={() => history.push("/signup")}
-        >
-          Join
-        </button>
-        <div
-          className="logo-div"
-          style={{ display: pathname === "/user" ? "block" : "" }}
-        >
-          <span className="logo">
-            <img onClick={() => setDropdown(!dropdown)} src={logoPic} alt="" />
-          </span>
-        </div>
+        {user ? (
+          <div className="logo-div">
+            <span className="logo">
+              <img onClick={showDropdown} src={logoPic} alt="" />
+            </span>
+          </div>
+        ) : null}
+      </>
+    );
+  };
 
-        {dropdown && (
-          <section
-            className="dropdown"
-            style={{ display: pathname === "/user" ? "" : "none" }}
-          >
-            <span className="triangle">
-              <img src={triangle} alt="" />
-            </span>
-            <ul>
-              <Link to="/profile">
-                <li>Profile</li>
-              </Link>
-              <hr />
-              <Link to="/checkout">
-                <li>Checkout</li>
-              </Link>
-              <hr />
-              <Link to="/profile">
-                <li>Order</li>
-              </Link>
-              <hr />
-              <Link to="/login">
-                <li className="last">Logout</li>
-              </Link>
-            </ul>
-          </section>
-        )}
-      </div>
-      <div className={searchError ? "error" : "active-error error"}>
-        {searchError && (
-          <p>
-            Try <b>Lime</b> or <b>Fresh Beef</b>
-            <span onClick={() => setSearchError(!searchError)}>
-              <IoIosClose />
-            </span>
-          </p>
-        )}
+  return (
+    <>
+      <div className="header" style={headerStyle}>
+        {showModal && <AuthModal closeModal={closeModal} />}
+        {renderHeader()}
+        {dropdown && renderDropdown()}
       </div>
     </>
   );

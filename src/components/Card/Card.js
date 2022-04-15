@@ -1,6 +1,7 @@
 import React from "react";
-import "../Shop/Shop.css";
 import SingleCard from "./SingleCard";
+
+import "../Shop/Shop.css";
 
 const Card = ({ products }) => {
   return (

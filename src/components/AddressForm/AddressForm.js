@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 import clsx from "clsx";
 
 const AddressForm = ({
@@ -10,18 +11,15 @@ const AddressForm = ({
   showOrder,
   setShowOrder,
 }) => {
-
-  
   const addressFormSubmit = (data) => {
     setShowOrder(!showOrder);
     setShowNewAddressForm(!showNewAddressForm);
 
     if (allAddresses.length > 2) return;
-    const id = Math.random();
+    const id = uuidv4();
     const title = data.addressTitle;
-    const addre$$ = data.addresses;
-    const active = false;
-    const newAddress = { id, title, addre$$, active };
+    const address = data.addresses;
+    const newAddress = { id, title, address };
 
     setAllAddresses([...allAddresses, newAddress]);
   };

@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import "./Shop.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAllProducts,
   getCategories,
   getLastProducts,
   getProducts,
-} from "../../features/redux/bazarSlice";
+} from "../../features/redux/bazar/bazarThunkActions";
 import { HiMinus } from "react-icons/hi";
-import Card from "../Card/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { icons } from "../../features/extraData";
 import {
   categoriesSelector,
   productsSelector,
-} from "../../features/redux/selector";
+} from "../../features/redux/bazar/bazarSelector";
+import Card from "../Card/Card";
+
+import "./Shop.css";
 
 const Shop = () => {
   const [activeCategoriesIds, setActiveCategoriesIds] = useState([]);
@@ -36,6 +38,7 @@ const Shop = () => {
       );
     } else {
       setActiveCategoriesIds([...activeCategoriesIds, categoryId]);
+      setActiveChildCategoriesIds([]);
     }
   };
 
@@ -63,7 +66,7 @@ const Shop = () => {
         activeChildCategoriesIds.filter((id) => categoryId !== id)
       );
     } else {
-      setActiveChildCategoriesIds([...activeChildCategoriesIds, categoryId]);
+      setActiveChildCategoriesIds([categoryId]);
     }
   };
 
@@ -71,8 +74,8 @@ const Shop = () => {
     dispatch(getLastProducts());
   };
 
-  return (
-    <div className="shop">
+  const renderCategories = () => {
+    return (
       <div className="categories-left-bar">
         {categories.map((category) => (
           <ul key={category.id} className="category-list">
@@ -115,14 +118,27 @@ const Shop = () => {
           </ul>
         ))}
       </div>
+    );
+  };
+
+  const renderProducts = () => {
+    return (
       <div>
         <div>
           <Card products={products} />
         </div>
         <div className="load-button">
-          <button onClick={getLastProductsHandler}>Load More</button>
+          {products.length !== 0 && products.length < 30 ? (
+            <button onClick={getLastProductsHandler}>Load More</button>
+          ) : null}
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div className="shop">
+      {renderCategories()} {renderProducts()}
     </div>
   );
 };

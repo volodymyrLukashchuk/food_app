@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getCoupons } from "../../features/redux/bazarSlice";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
+
+import SingleCoupon from "./SingleCoupon";
+import { getCoupons } from "../../features/redux/bazar/bazarThunkActions";
+import { couponSelector } from "../../features/redux/bazar/bazarSelector";
+
 import "./Coupon.css";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext,
-} from "pure-react-carousel";
-import { couponSelector } from "../../features/redux/selector";
 
 const Coupon = () => {
   const coupons = useSelector(couponSelector);
@@ -33,88 +29,22 @@ const Coupon = () => {
         <Slide index={0}>
           <div className="coupons">
             {coupons.map((coupon) => (
-              <div
-                style={{
-                  background: `linear-gradient(90deg, ${coupon.gradientColors.start} 0%, ${coupon.gradientColors.end} 100%)`,
-                }}
-                className="single-coupon"
-                key={coupon.id}
-              >
-                <p>{coupon.title}</p>
-                <span>{coupon.description}</span>
-                <button style={{ color: coupon.gradientColors.end }}>
-                  {coupon.buttonText}
-                </button>
-              </div>
+              <SingleCoupon coupon={coupon} />
             ))}
-            <ButtonBack className="arrow-button-left">
-              <span>
-                <MdKeyboardArrowLeft />
-              </span>
-            </ButtonBack>
-            <ButtonNext className="arrow-button-right">
-              <span>
-                <MdKeyboardArrowRight />
-              </span>
-            </ButtonNext>
           </div>
         </Slide>
         <Slide index={1}>
           <div className="coupons">
             {coupons.map((coupon) => (
-              <div
-                style={{
-                  background: `linear-gradient(90deg, ${coupon.gradientColors.start} 0%, ${coupon.gradientColors.end} 100%)`,
-                }}
-                className="single-coupon"
-                key={coupon.id}
-              >
-                <p>{coupon.title}</p>
-                <span>{coupon.description}</span>
-                <button style={{ color: coupon.gradientColors.end }}>
-                  {coupon.buttonText}
-                </button>
-              </div>
+              <SingleCoupon coupon={coupon} />
             ))}
-            <ButtonBack className="arrow-button-left">
-              <span>
-                <MdKeyboardArrowLeft />
-              </span>
-            </ButtonBack>
-            <ButtonNext className="arrow-button-right">
-              <span>
-                <MdKeyboardArrowRight />
-              </span>
-            </ButtonNext>
           </div>
         </Slide>
         <Slide index={2}>
           <div className="coupons">
             {coupons.map((coupon) => (
-              <div
-                style={{
-                  background: `linear-gradient(90deg, ${coupon.gradientColors.start} 0%, ${coupon.gradientColors.end} 100%)`,
-                }}
-                className="single-coupon"
-                key={coupon.id}
-              >
-                <p>{coupon.title}</p>
-                <span>{coupon.description}</span>
-                <button style={{ color: coupon.gradientColors.end }}>
-                  {coupon.buttonText}
-                </button>
-              </div>
+              <SingleCoupon coupon={coupon} />
             ))}
-            <ButtonBack className="arrow-button-left">
-              <span>
-                <MdKeyboardArrowLeft />
-              </span>
-            </ButtonBack>
-            <ButtonNext className="arrow-button-right">
-              <span>
-                <MdKeyboardArrowRight />
-              </span>
-            </ButtonNext>
           </div>
         </Slide>
       </Slider>

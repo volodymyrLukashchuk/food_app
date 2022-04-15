@@ -13,6 +13,7 @@
 
 .bazar-logo img {
   padding-right: 30px;
+  cursor: pointer;
 }
 
 .header button {
@@ -62,15 +63,7 @@
   height: 14px;
 }
 
-.header .lang {
-  display: none;
-}
-
 .user button {
-  display: none;
-}
-
-.header .logo-div {
   display: none;
 }
 

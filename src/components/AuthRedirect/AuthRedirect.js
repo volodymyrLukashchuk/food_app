@@ -1,25 +1,26 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
+import { useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { googleLogin } from "../../features/redux/user/userThunkActions";
 
 const AuthRedirect = () => {
   const location = useLocation();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const urlParams = new URLSearchParams(location.search);
   const accessToken = urlParams.get("access_token");
 
   useEffect(() => {
     const fetchToken = async () => {
-      const res = await axios.get(
-        `https://pickbazar.batarin.dev/auth/google/callback?access_token=${accessToken}`
-      );
-      localStorage.setItem("jwt", res.data.jwt);
-      return res.data;
+      dispatch(googleLogin(accessToken));
+      history.push("/");
     };
     fetchToken();
-  }, [accessToken]);
+  }, []);
 
-  return <div></div>;
+  return null;
 };
 
 export default AuthRedirect;

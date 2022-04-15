@@ -1,12 +1,12 @@
 .product-page {
   background: #f7f7f7;
-  padding: 20px 40px;
+  padding: 20px 10px;
 }
 
 .product-description {
   display: flex;
   padding-left: 20px;
-  padding-right: 30px;
+  padding-right: 20px;
 }
 
 .description-left {

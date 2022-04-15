@@ -72,25 +72,6 @@
   outline: none;
 }
 
-.modal,
-.overlay {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
-}
-
-.overlay {
-  background: rgba(49, 49, 49, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: default;
-}
-
 .continue-btn {
   color: #ffffff;
   background: var(--main);
@@ -173,14 +154,14 @@
   font-size: 16px;
 }
 
-.continuefb-btn {
+.continue-fb-btn {
   border-radius: 6px;
   border: none;
   background: #4267b2;
   color: #ffffff;
 }
 
-.continuegoogle-btn {
+.continue-google-btn {
   border-radius: 6px;
   border: none;
   background: #4286f4;
@@ -231,4 +212,8 @@
 
 .signup-modal .lang {
   display: block;
+}
+
+.hide {
+  display: none;
 }

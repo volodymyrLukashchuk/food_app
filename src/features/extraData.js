@@ -11,6 +11,27 @@ import {
   faGlassMartiniAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
+export const MODAL_CONFIG = {
+  signup: {
+    header: "Sign Up",
+    subHeader: "Welcome",
+    footer: "Already have an account?",
+    footerButton: "Login",
+  },
+  signin: {
+    header: "Welcome Back",
+    subHeader: "Login with your email & password",
+    footer: "Don't have an account yet?",
+    footerButton: "Sign Up",
+  },
+  password: {
+    header: "Forgot Password",
+    subHeader: "We'll send you a link to reset your password",
+    footer: "Back to",
+    footerButton: "Login",
+  },
+};
+
 export const timeMid = [
   {
     id: 1,
@@ -59,5 +80,3 @@ export const icons = [
   { id: 47, src: faGlassMartiniAlt },
   { id: 55, src: faHeartbeat },
 ];
-
-

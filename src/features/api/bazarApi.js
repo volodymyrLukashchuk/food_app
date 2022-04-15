@@ -1,5 +1,17 @@
 import axios from "axios";
+import store from "../redux/store";
 
-export default axios.create({
-  baseURL: "https://pickbazar.batarin.dev/",
+const bazarApi = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
+
+bazarApi.interceptors.request.use((config) => {
+  const token = store.getState().user.token;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export default bazarApi;

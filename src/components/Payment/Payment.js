@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation } from "react-router";
-import "./Payment.css";
 import { useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import {
@@ -8,14 +7,18 @@ import {
   totalPriceSelector,
 } from "../../features/redux/selector";
 
+import "./Payment.css";
+
 const Payment = () => {
   const data = useLocation();
+
+  console.log(data);
 
   const totalPrice = useSelector(totalPriceSelector);
   const discount = useSelector(discountSelector);
 
-  return (
-    <div className="payment">
+  const renderPaymentPage = () => {
+    return (
       <div className="payment-form">
         <div className="forms">
           <div className="form-top">
@@ -80,8 +83,10 @@ const Payment = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  return <div className="payment">{renderPaymentPage()}</div>;
 };
 
 export default Payment;

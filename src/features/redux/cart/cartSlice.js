@@ -42,9 +42,12 @@ const cartSlice = createSlice({
         }
       });
     },
+    clearCart(state) {
+      state.items = [];
+    },
   },
 });
 
 export const cartActions = cartSlice.actions;
 
-export default cartSlice;
+export const cartReducer = cartSlice.reducer;
