@@ -38,7 +38,7 @@ const Header = () => {
     setDropdown(!dropdown);
   };
 
-  const homeButton = () => {
+  const handleHomeButtonClick = () => {
     history.push("/");
   };
 
@@ -78,7 +78,7 @@ const Header = () => {
   const renderHeader = () => {
     return (
       <>
-        <div onClick={homeButton} className="bazar-logo">
+        <div onClick={handleHomeButtonClick} className="bazar-logo">
           <img src={bazar} alt="" />
         </div>
         <div className="header-input">
