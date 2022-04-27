@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { IoBagRemove } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 import { cartActions } from "../../features/redux/cart/cartSlice";
 import {
@@ -10,6 +11,7 @@ import {
   getAllProducts,
 } from "../../features/redux/bazar/bazarThunkActions";
 import { cardSelector } from "../../features/redux/bazar/bazarSelector";
+import { userSelector } from "../../features/redux/user/userSelector";
 
 import "./Product.css";
 import Card from "../Card/Card";
@@ -21,7 +23,10 @@ const Product = () => {
     state.bazar.allProducts.find((p) => p.id === +id)
   );
 
+  const [mainPic, setMainPic] = useState(null);
+
   const card = useSelector(cardSelector);
+  const user = useSelector(userSelector);
 
   useEffect(() => {
     dispatch(getCard());
@@ -40,6 +45,15 @@ const Product = () => {
 
   const addToCart = () => {
     addToCartHandler(singleProduct.id);
+    if (user) {
+      addToCartHandler(singleProduct.id);
+    } else {
+      toast.error("You are not Logged In");
+    }
+  };
+
+  const clearMainPic = () => {
+    setMainPic(null);
   };
 
   if (!singleProduct) return null;
@@ -51,7 +65,10 @@ const Product = () => {
           <div className="description-left">
             <div className="main-pic">
               <img
-                src={`https://pickbazar.batarin.dev${singleProduct.photos[0].url}`}
+                src={
+                  mainPic ||
+                  `https://pickbazar.batarin.dev${singleProduct.photos[0].url}`
+                }
                 alt=""
               />
             </div>
@@ -62,6 +79,10 @@ const Product = () => {
                     key={pic.url}
                     src={`https://pickbazar.batarin.dev${pic.url}`}
                     alt=""
+                    onMouseEnter={() =>
+                      setMainPic(`https://pickbazar.batarin.dev${pic.url}`)
+                    }
+                    onMouseLeave={clearMainPic}
                   />
                 );
               })}

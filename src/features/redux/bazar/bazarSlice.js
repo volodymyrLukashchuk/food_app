@@ -11,17 +11,20 @@ import {
   postCheckout,
 } from "./bazarThunkActions";
 
+const initialState = {
+  coupons: [],
+  categories: [],
+  products: [],
+  allProducts: [],
+  card: [],
+  lastProducts: [],
+  checkout: [],
+  page: 0,
+};
+
 const bazarSlice = createSlice({
   name: "bazar",
-  initialState: {
-    coupons: [],
-    categories: [],
-    products: [],
-    allProducts: [],
-    card: [],
-    lastProducts: [],
-    checkout: [],
-  },
+  initialState,
   extraReducers: {
     [getCoupons.fulfilled](state, action) {
       state.coupons = action.payload;
@@ -42,7 +45,8 @@ const bazarSlice = createSlice({
       state.card = action.payload;
     },
     [getLastProducts.fulfilled](state, action) {
-      state.products = action.payload;
+      state.products = state.products.concat(action.payload.newProducts);
+      state.page = action.payload.newPage;
     },
     [postCheckout.fulfilled](state, action) {
       state.checkout = action.payload;
