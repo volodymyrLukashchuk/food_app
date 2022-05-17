@@ -43,7 +43,7 @@ const Product = () => {
     dispatch(cartActions.addItemsToCart(item));
   };
 
-  const addToCart = () => {
+  const handleAddItemToCart = () => {
     addToCartHandler(singleProduct.id);
     if (user) {
       addToCartHandler(singleProduct.id);
@@ -54,6 +54,20 @@ const Product = () => {
 
   const clearMainPic = () => {
     setMainPic(null);
+  };
+
+  const renderMainPic = (pic) => {
+    return (
+      <img
+        key={pic.url}
+        src={`https://pickbazar.batarin.dev${pic.url}`}
+        alt=""
+        onMouseEnter={() =>
+          setMainPic(`https://pickbazar.batarin.dev${pic.url}`)
+        }
+        onMouseLeave={clearMainPic}
+      />
+    );
   };
 
   if (!singleProduct) return null;
@@ -74,17 +88,7 @@ const Product = () => {
             </div>
             <div className="bottom-pic">
               {singleProduct.photos.map((pic) => {
-                return (
-                  <img
-                    key={pic.url}
-                    src={`https://pickbazar.batarin.dev${pic.url}`}
-                    alt=""
-                    onMouseEnter={() =>
-                      setMainPic(`https://pickbazar.batarin.dev${pic.url}`)
-                    }
-                    onMouseLeave={clearMainPic}
-                  />
-                );
+                return renderMainPic(pic);
               })}
             </div>
           </div>
@@ -99,7 +103,7 @@ const Product = () => {
             </div>
             <div className="description-right-bottom">
               <div className="bottom-btn">
-                <button onClick={addToCart}>
+                <button onClick={handleAddItemToCart}>
                   <i>
                     <IoBagRemove />
                   </i>
