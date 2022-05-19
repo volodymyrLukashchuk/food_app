@@ -57,14 +57,15 @@ const Product = () => {
   };
 
   const renderMainPic = (pic) => {
+    const changeMainPic = () =>
+      setMainPic(`https://pickbazar.batarin.dev${pic.url}`);
+
     return (
       <img
         key={pic.url}
         src={`https://pickbazar.batarin.dev${pic.url}`}
         alt=""
-        onMouseEnter={() =>
-          setMainPic(`https://pickbazar.batarin.dev${pic.url}`)
-        }
+        onMouseEnter={changeMainPic}
         onMouseLeave={clearMainPic}
       />
     );

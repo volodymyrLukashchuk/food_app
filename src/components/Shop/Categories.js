@@ -64,10 +64,12 @@ const Categories = () => {
   };
 
   const renderMainCategories = (category) => {
+    const handleMainCategory = () => handleCategoryClick(category.id);
+
     return (
       <p
         className={activeCategoriesIds.includes(category.id) ? "active" : ""}
-        onClick={() => handleCategoryClick(category.id)}
+        onClick={handleMainCategory}
       >
         <FontAwesomeIcon
           className="category-icons"
@@ -81,11 +83,13 @@ const Categories = () => {
   };
 
   const renderChildCategories = (item) => {
+    const handleChildCategory = () => handleChildClick(item.id);
+
     return (
       <div key={item.id} className="child-list">
         <p
           className={activeChildCategoriesIds.includes(item.id) ? "active" : ""}
-          onClick={() => handleChildClick(item.id)}
+          onClick={handleChildCategory}
         >
           <HiMinus /> {item.title}
         </p>
