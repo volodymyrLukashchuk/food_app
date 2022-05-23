@@ -63,42 +63,50 @@ const Categories = () => {
     }
   };
 
+  const renderMainCategories = (category) => {
+    const handleMainCategory = () => handleCategoryClick(category.id);
+
+    return (
+      <p
+        className={activeCategoriesIds.includes(category.id) ? "active" : ""}
+        onClick={handleMainCategory}
+      >
+        <FontAwesomeIcon
+          className="category-icons"
+          key={icons.find((i) => i.id === category.id).id}
+          icon={icons.find((i) => i.id === category.id).src}
+        />
+
+        {category.title}
+      </p>
+    );
+  };
+
+  const renderChildCategories = (item) => {
+    const handleChildCategory = () => handleChildClick(item.id);
+
+    return (
+      <div key={item.id} className="child-list">
+        <p
+          className={activeChildCategoriesIds.includes(item.id) ? "active" : ""}
+          onClick={handleChildCategory}
+        >
+          <HiMinus /> {item.title}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="categories-left-bar">
       {categories.map((category) => (
         <ul key={category.id} className="category-list">
           <li>
-            <p
-              className={
-                activeCategoriesIds.includes(category.id) ? "active" : ""
-              }
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              <FontAwesomeIcon
-                className="category-icons"
-                key={icons.find((i) => i.id === category.id).id}
-                icon={icons.find((i) => i.id === category.id).src}
-              />
-
-              {category.title}
-            </p>
+            {renderMainCategories(category)}
             {activeCategoriesIds.includes(category.id) && (
               <div>
                 {category.childCategories.map((item) => {
-                  return (
-                    <div key={item.id} className="child-list">
-                      <p
-                        className={
-                          activeChildCategoriesIds.includes(item.id)
-                            ? "active"
-                            : ""
-                        }
-                        onClick={() => handleChildClick(item.id)}
-                      >
-                        <HiMinus /> {item.title}
-                      </p>
-                    </div>
-                  );
+                  return renderChildCategories(item);
                 })}
               </div>
             )}
