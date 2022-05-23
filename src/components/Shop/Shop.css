@@ -23,7 +23,7 @@
 
 .category-list li p:hover {
   color: var(--main);
-  cursor: default;
+  cursor: pointer;
 }
 
 .category-list li p {
@@ -151,6 +151,7 @@
   font-family: var(--font-secondary);
   font-size: 14px;
   padding: 10px 30px;
+  cursor: pointer;
 }
 
 .load-button {

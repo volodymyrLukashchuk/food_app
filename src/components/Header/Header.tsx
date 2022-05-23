@@ -25,12 +25,12 @@ const Header = () => {
   const user = useSelector(userSelector);
   const headerStyle = {
     position: pathname === "/" ? "absolute" : "",
-  };
+  } as React.CSSProperties;
 
   const handleLogout = () => {
     dispatch(userActions.logout());
     setDropdown(!dropdown);
-    dispatch(cartActions.clearCart());
+    dispatch(cartActions.clearCart(true));
     setShowModal(false);
   };
 
@@ -38,7 +38,7 @@ const Header = () => {
     setDropdown(!dropdown);
   };
 
-  const homeButton = () => {
+  const handleHomeButtonClick = () => {
     history.push("/");
   };
 
@@ -78,7 +78,7 @@ const Header = () => {
   const renderHeader = () => {
     return (
       <>
-        <div onClick={homeButton} className="bazar-logo">
+        <div onClick={handleHomeButtonClick} className="bazar-logo">
           <img src={bazar} alt="" />
         </div>
         <div className="header-input">

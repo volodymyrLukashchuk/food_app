@@ -4,12 +4,35 @@ import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
 
 import SingleCoupon from "./SingleCoupon";
 import { getCoupons } from "../../features/redux/bazar/bazarThunkActions";
-import { couponSelector } from "../../features/redux/bazar/bazarSelector";
+import { getCouponsSelector } from "../../features/redux/bazar/bazarSelector";
 
 import "./Coupon.css";
 
+export type ICoupon = {
+  buttonText: string;
+  created_at: string;
+  created_by: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    username: null;
+  };
+  description: string;
+  gradientColors: { start: string; end: string };
+  id: number;
+  title: string;
+  updated_at: string;
+  updated_by: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    username: null;
+  };
+};
+
 const Coupon = () => {
-  const coupons = useSelector(couponSelector);
+  const coupons = useSelector(getCouponsSelector);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,22 +51,22 @@ const Coupon = () => {
       <Slider>
         <Slide index={0}>
           <div className="coupons">
-            {coupons.map((coupon) => (
-              <SingleCoupon coupon={coupon} />
+            {coupons.map((coupon: ICoupon, i: number) => (
+              <SingleCoupon key={i} coupon={coupon} />
             ))}
           </div>
         </Slide>
         <Slide index={1}>
           <div className="coupons">
-            {coupons.map((coupon) => (
-              <SingleCoupon coupon={coupon} />
+            {coupons.map((coupon: ICoupon, i: number) => (
+              <SingleCoupon key={i} coupon={coupon} />
             ))}
           </div>
         </Slide>
         <Slide index={2}>
           <div className="coupons">
-            {coupons.map((coupon) => (
-              <SingleCoupon coupon={coupon} />
+            {coupons.map((coupon: ICoupon, i: number) => (
+              <SingleCoupon key={i} coupon={coupon} />
             ))}
           </div>
         </Slide>

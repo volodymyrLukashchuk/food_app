@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form/";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { postCheckout } from "../../features/redux/bazar/bazarThunkActions";
+import {
+  Data,
+  postCheckout,
+} from "../../features/redux/bazar/bazarThunkActions";
 import { timeMid, timeBot } from "../../features/extraData";
 import {
   cartDataSelector,
@@ -17,6 +20,7 @@ import AddressForm from "../AddressForm/AddressForm";
 import NumberForm from "../AddressForm/NumberForm";
 
 import "./Checkout.css";
+import { RootState } from "../../features/redux/store";
 
 const Checkout = () => {
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
@@ -27,7 +31,7 @@ const Checkout = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector((state) => state.user.userData);
+  const user = useSelector<RootState, any>((state) => state.user.userData);
 
   const cartData = useSelector(cartDataSelector);
   const totalPrice = useSelector(totalPriceSelector);
@@ -47,9 +51,9 @@ const Checkout = () => {
   };
 
   const checkoutHandler = async () => {
-    const items = cartItems.map((item) => item.id);
+    const items = cartItems.map((item: { id: number }) => item.id);
 
-    let data = {
+    let data: Data = {
       address: selectedAddress.address,
       phone: selectedNumber.num,
       products: items,
@@ -60,11 +64,11 @@ const Checkout = () => {
     history.push("/payment", data);
   };
 
-  const deleteAddress = (add) => {
+  const deleteAddress = (add: string) => {
     setAllAddresses(allAddresses.filter((item) => item.id !== add));
   };
 
-  const deleteNumber = (num) => {
+  const deleteNumber = (num: string) => {
     setAllNumbers(allNumbers.filter((item) => item.id !== num));
   };
 
@@ -72,7 +76,25 @@ const Checkout = () => {
     defaultValues: { address: null, number: null, time: null },
   });
 
-  const renderAddress = (add) => {
+  type Address = {
+    address: string;
+    id: string;
+    title: string;
+  };
+
+  type Time = {
+    description: string;
+    id: number;
+    title: string;
+  };
+
+  type Number = {
+    id: string;
+    num: string;
+    title: string;
+  };
+
+  const renderAddress = (add: Address) => {
     return (
       <div key={add.id}>
         <div
@@ -101,7 +123,7 @@ const Checkout = () => {
     );
   };
 
-  const renderUpperTime = (time) => {
+  const renderUpperTime = (time: Time) => {
     return (
       <div key={time.id}>
         <div
@@ -117,7 +139,7 @@ const Checkout = () => {
     );
   };
 
-  const renderLowerTime = (time) => {
+  const renderLowerTime = (time: Time) => {
     return (
       <div key={time.id}>
         <div
@@ -133,7 +155,7 @@ const Checkout = () => {
     );
   };
 
-  const renderNumber = (num) => {
+  const renderNumber = (num: Number) => {
     return (
       <div key={num.id}>
         <div
@@ -266,7 +288,7 @@ const Checkout = () => {
             <div className="top">
               <p>Your Order</p>
             </div>
-            {cartData.map((data) => (
+            {cartData.map((data: any) => (
               <div key={data.id} className="items-form">
                 <div className="form">
                   <div className="item">

@@ -1,7 +1,7 @@
 import bazarApi from "../../api/bazarApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const googleLogin = createAsyncThunk(
+export const googleLogin: any = createAsyncThunk(
   "token/getToken",
   async (accessToken) => {
     const res = await bazarApi.get(

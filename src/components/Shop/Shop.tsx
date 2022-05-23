@@ -5,7 +5,7 @@ import Products from "./Products";
 
 import "./Shop.css";
 
-const Shop = () => {
+const Shop: React.FC = () => {
   return (
     <div className="shop">
       <Categories />

@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../../features/redux/store";
 
 import Coupon from "../Coupon/Coupon";
 import Shop from "../Shop/Shop";
@@ -7,8 +8,8 @@ import SideNav from "../Sidenav/SideNav";
 
 import "./Home.css";
 
-const Home = () => {
-  const user = useSelector((state) => state.user.userData);
+const Home: React.FC = () => {
+  const user = useSelector((state: RootState) => state.user.userData);
 
   return (
     <>

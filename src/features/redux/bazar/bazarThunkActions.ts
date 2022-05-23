@@ -14,11 +14,14 @@ export const getCategories = createAsyncThunk(
   }
 );
 
-export const getProducts = createAsyncThunk(
+export const getProducts = createAsyncThunk<any, any>(
   "products/getProducts",
   async (activeChildCategoriesIds) => {
     const url = `products?${activeChildCategoriesIds
-      .map((id, indx) => "_where[_or][" + indx + "][category]=" + id)
+      .map(
+        (id: number, indx: number) =>
+          "_where[_or][" + indx + "][category]=" + id
+      )
       .join("&")}&_start=0&_limit=10`;
 
     const res = await bazarApi.get(url);
@@ -28,9 +31,8 @@ export const getProducts = createAsyncThunk(
 
 export const getLastProducts = createAsyncThunk(
   "lastProducts/getLastProducts",
-  async (a, thunkAPI) => {
+  async (a, thunkAPI: any) => {
     const state = thunkAPI.getState();
-    console.log(state);
     const newPage = state.bazar.page + 1;
     const res = await bazarApi.get(
       `products?&_start=${newPage * 10}&_limit=10`
@@ -47,7 +49,7 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-export const getSingleProduct = createAsyncThunk(
+export const getSingleProduct = createAsyncThunk<any, string>(
   "allproducts/getSingleProduct",
   async (id) => {
     const res = await bazarApi.get(`products/${id}`);
@@ -67,9 +69,17 @@ export const getCard = createAsyncThunk("card/getCard", async () => {
   return res.data;
 });
 
+export type Data = {
+  address: string;
+  phone: string;
+  products: number[];
+  when: string;
+  email: string;
+};
+
 export const postCheckout = createAsyncThunk(
   "checkout/postCheckout",
-  async (data) => {
+  async (data: Data) => {
     const res = await bazarApi.post("orders", data);
     return res.data;
   }

@@ -21,11 +21,13 @@ const persistConfig = {
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   bazar: bazarReducer,
   cart: cartReducer,
   user: persistedUserReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 const store = configureStore({
   reducer: rootReducer,

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getLastProducts } from "../../features/redux/bazar/bazarThunkActions";
 import { getProductsSelector } from "../../features/redux/bazar/bazarSelector";
 
-const Products = () => {
+const Products: React.FC = () => {
   const dispatch = useDispatch();
   const products = useSelector(getProductsSelector);
 

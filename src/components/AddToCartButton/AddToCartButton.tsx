@@ -5,13 +5,17 @@ import { userSelector } from "../../features/redux/user/userSelector";
 import { useLocation } from "react-router-dom";
 import { cartActions } from "../../features/redux/cart/cartSlice";
 import { toast } from "react-toastify";
+import { Products } from "../../features/redux/bazar/bazarSlice";
 
-const AddToCartButton = ({ product, singleProduct }) => {
+const AddToCartButton: React.FC<{
+  product: Products;
+  singleProduct: Products;
+}> = ({ product, singleProduct }) => {
   const { pathname } = useLocation();
   const user = useSelector(userSelector);
   const dispatch = useDispatch();
 
-  const addToCartHandler = (item) => {
+  const addToCartHandler = (item: number) => {
     dispatch(cartActions.addItemsToCart(item));
   };
 

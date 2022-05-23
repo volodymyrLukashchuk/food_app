@@ -18,6 +18,17 @@ import "./SideNav.css";
 import "../Home/Home.css";
 import "../Header/Header.css";
 
+type itemCart = {
+  id: number;
+  quantity: number;
+  itemData: {
+    name: string;
+    price: number;
+    size: string;
+    photos: any[];
+  };
+};
+
 const SideNav = () => {
   const [sideNav, setSideNav] = useState(false);
   const dispatch = useDispatch();
@@ -30,15 +41,15 @@ const SideNav = () => {
 
   const formatter = new Intl.NumberFormat("en");
 
-  const addItemHandler = (item) => {
+  const addItemHandler = (item: number) => {
     dispatch(cartActions.increaseItemQuantity(item));
   };
 
-  const deleteItemHandler = (item) => {
+  const deleteItemHandler = (item: number) => {
     dispatch(cartActions.removeItemsFromCart(item));
   };
 
-  const subtractItemHandler = (item) => {
+  const subtractItemHandler = (item: number) => {
     dispatch(cartActions.decreaseItemQuantity(item));
   };
 
@@ -70,7 +81,7 @@ const SideNav = () => {
             <IoMdClose onClick={showSideNav} />
           </div>
         </div>
-        {cartData.map((item) => renderCartItems(item))}
+        {cartData.map((item: any) => renderCartItems(item))}
         {cartItems.length > 0 ? (
           ""
         ) : (
@@ -87,7 +98,7 @@ const SideNav = () => {
     );
   };
 
-  const renderCartItems = (item) => {
+  const renderCartItems = (item: itemCart) => {
     return (
       <div key={item.id} className="cart-products">
         <div className="cart-left">
@@ -97,7 +108,15 @@ const SideNav = () => {
             </div>
             <p>{item.quantity}</p>
             <div>
-              <span onClick={() => subtractItemHandler(item.id)}>-</span>
+              <span
+                onClick={() =>
+                  item.quantity < 2
+                    ? deleteItemHandler(item.id)
+                    : subtractItemHandler(item.id)
+                }
+              >
+                -
+              </span>
             </div>
           </div>
           <div className="left-logo">

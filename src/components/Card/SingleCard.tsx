@@ -1,23 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { IoBagRemove } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 
-import { cartActions } from "../../features/redux/cart/cartSlice";
+import AddToCartButton from "../AddToCartButton/AddToCartButton";
+import { Products } from "../../features/redux/bazar/bazarSlice";
 
-const SingleCard = ({ product }) => {
-  const { id } = useParams();
-  const dispatch = useDispatch();
-
-  const addToCartHandler = (item) => {
-    dispatch(cartActions.addItemsToCart(item));
-  };
-
-  const addToCart = () => {
-    addToCartHandler(product.id)
-  }
-  
+const SingleCard: React.FC<{ product: Products }> = ({ product }) => {
+  const { id } = useParams<{ id: string }>();
 
   return (
     <div key={product.id} className="card">
@@ -51,14 +40,7 @@ const SingleCard = ({ product }) => {
       </div>
       <div className="card-bottom">
         <p>${product.price}</p>
-        <div>
-          <button onClick={addToCart}>
-            <span>
-              <IoBagRemove />
-            </span>
-            Cart
-          </button>
-        </div>
+        <AddToCartButton singleProduct={product} product={product} />
       </div>
     </div>
   );

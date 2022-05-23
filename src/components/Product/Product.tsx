@@ -15,15 +15,17 @@ import { userSelector } from "../../features/redux/user/userSelector";
 
 import "./Product.css";
 import Card from "../Card/Card";
+import { RootState } from "../../features/redux/store";
+import { Products } from "../../features/redux/bazar/bazarSlice";
 
 const Product = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
-  const singleProduct = useSelector((state) =>
+  const singleProduct = useSelector<RootState, Products | undefined>((state) =>
     state.bazar.allProducts.find((p) => p.id === +id)
   );
 
-  const [mainPic, setMainPic] = useState(null);
+  const [mainPic, setMainPic] = useState<null | string>(null);
 
   const card = useSelector(cardSelector);
   const user = useSelector(userSelector);
@@ -39,16 +41,18 @@ const Product = () => {
     }
   }, [dispatch, id, singleProduct]);
 
-  const addToCartHandler = (item) => {
+  const addToCartHandler = (item: number) => {
     dispatch(cartActions.addItemsToCart(item));
   };
 
   const addToCart = () => {
-    addToCartHandler(singleProduct.id);
-    if (user) {
+    if (singleProduct) {
       addToCartHandler(singleProduct.id);
-    } else {
-      toast.error("You are not Logged In");
+      if (user) {
+        addToCartHandler(singleProduct.id);
+      } else {
+        toast.error("You are not Logged In");
+      }
     }
   };
 

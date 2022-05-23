@@ -1,8 +1,9 @@
 import React from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { ButtonBack, ButtonNext } from "pure-react-carousel";
+import { ICoupon } from "../Coupon/Coupon";
 
-const SingleCoupon = ({ coupon }) => {
+const SingleCoupon: React.FC<{ coupon: ICoupon }> = ({ coupon }) => {
   return (
     <>
       <div

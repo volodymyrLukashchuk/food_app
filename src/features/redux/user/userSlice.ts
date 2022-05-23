@@ -1,10 +1,24 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { AnyAction, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { signIn, googleLogin, signUp } from "./userThunkActions";
 
 const initialState = {
   userData: null,
   token: null,
   error: null,
+};
+
+export type User = {
+  blocked: null;
+  confirmed: boolean;
+  created_at: string;
+  created_by: null;
+  email: string;
+  id: number;
+  provider: string;
+  role: any;
+  updated_at: string;
+  updated_by: null;
+  username: string;
 };
 
 const userSlice = createSlice({
@@ -24,7 +38,7 @@ const userSlice = createSlice({
         state.userData = action.payload.user;
       }
     );
-    builder.addMatcher(
+    builder.addMatcher<AnyAction>(
       isAnyOf(signIn.rejected, signUp.rejected),
       (state, action) => {
         state.error = action.error.message;

@@ -9,10 +9,16 @@ import {
 
 import "./Payment.css";
 
-const Payment = () => {
-  const data = useLocation();
+type IState = {
+  address: string;
+  email: string;
+  phone: string;
+  products: number[];
+  when: string;
+};
 
-  console.log(data);
+const Payment = () => {
+  const data = useLocation<IState>();
 
   const totalPrice = useSelector(totalPriceSelector);
   const discount = useSelector(discountSelector);
