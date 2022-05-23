@@ -45,20 +45,18 @@ const Product = () => {
     dispatch(cartActions.addItemsToCart(item));
   };
 
-<<<<<<< HEAD:src/components/Product/Product.tsx
   const addToCart = () => {
     if (singleProduct) {
-=======
-  const handleAddItemToCart = () => {
-    addToCartHandler(singleProduct.id);
-    if (user) {
->>>>>>> 01d9b4c33e996ab36c54f594a08a0e3503865a7b:src/components/Product/Product.js
-      addToCartHandler(singleProduct.id);
-      if (user) {
-        addToCartHandler(singleProduct.id);
-      } else {
-        toast.error("You are not Logged In");
-      }
+      const handleAddItemToCart = () => {
+        if (user) {
+          addToCartHandler(singleProduct.id);
+          if (user) {
+            addToCartHandler(singleProduct.id);
+          } else {
+            toast.error("You are not Logged In");
+          }
+        }
+      };
     }
   };
 
@@ -66,7 +64,7 @@ const Product = () => {
     setMainPic(null);
   };
 
-  const renderMainPic = (pic) => {
+  const renderMainPic = (pic: any) => {
     const changeMainPic = () =>
       setMainPic(`https://pickbazar.batarin.dev${pic.url}`);
 
@@ -114,7 +112,7 @@ const Product = () => {
             </div>
             <div className="description-right-bottom">
               <div className="bottom-btn">
-                <button onClick={handleAddItemToCart}>
+                <button onClick={addToCart}>
                   <i>
                     <IoBagRemove />
                   </i>

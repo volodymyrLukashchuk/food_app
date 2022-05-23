@@ -31,8 +31,8 @@ export const getProducts = createAsyncThunk<any, any>(
 
 export const getLastProducts = createAsyncThunk(
   "lastProducts/getLastProducts",
-  async (_, thunkAPI) => {
-    const state: any = thunkAPI.getState();
+  async (_, thunkAPI: any) => {
+    const state = thunkAPI.getState();
     const newPage = state.bazar.page + 1;
     const res = await bazarApi.get(
       `products?&_start=${newPage * 10}&_limit=10`
