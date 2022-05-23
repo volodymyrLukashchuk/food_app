@@ -45,18 +45,12 @@ const Product = () => {
     dispatch(cartActions.addItemsToCart(item));
   };
 
-  const addToCart = () => {
-    if (singleProduct) {
-      const handleAddItemToCart = () => {
-        if (user) {
-          addToCartHandler(singleProduct.id);
-          if (user) {
-            addToCartHandler(singleProduct.id);
-          } else {
-            toast.error("You are not Logged In");
-          }
-        }
-      }
+  const handleAddItemToCart = (singleProduct: any) => {
+    addToCartHandler(singleProduct.id);
+    if (user) {
+      addToCartHandler(singleProduct.id);
+    } else {
+      toast.error("You are not Logged In");
     }
   };
 
@@ -112,7 +106,7 @@ const Product = () => {
             </div>
             <div className="description-right-bottom">
               <div className="bottom-btn">
-                <button onClick={addToCart}>
+                <button onClick={handleAddItemToCart}>
                   <i>
                     <IoBagRemove />
                   </i>
