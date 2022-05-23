@@ -56,7 +56,7 @@ const Product = () => {
             toast.error("You are not Logged In");
           }
         }
-      };
+      }
     }
   };
 
