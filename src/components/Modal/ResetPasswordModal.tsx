@@ -1,5 +1,3 @@
-import React from "react";
-
 import "./PasswordModal.css";
 
 const PasswordModal = () => {

@@ -2,8 +2,11 @@ import React from "react";
 import clsx from "clsx";
 import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
+import { INumber,INum } from "../../features/redux/cart/cartSlice";
 
-const NumberForm = ({
+
+
+const NumberForm: React.FC<INumber> = ({
   allNumbers,
   setAllNumbers,
   showOrder,
@@ -11,7 +14,7 @@ const NumberForm = ({
   showNewNumberForm,
   setShowNewNumberForm,
 }) => {
-  const addressFormSubmit = (data) => {
+  const addressFormSubmit = (data: INum) => {
     setShowNewNumberForm(!showNewNumberForm);
     setShowOrder(!showOrder);
 
@@ -28,7 +31,7 @@ const NumberForm = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<INum>();
 
   const numberStyle = clsx({
     "new-address-form": errors,

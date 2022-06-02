@@ -14,9 +14,9 @@ export const getCategories = createAsyncThunk(
   }
 );
 
-export const getProducts = createAsyncThunk<any, any>(
+export const getProducts = createAsyncThunk(
   "products/getProducts",
-  async (activeChildCategoriesIds) => {
+  async (activeChildCategoriesIds: Array<number>) => {
     const url = `products?${activeChildCategoriesIds
       .map(
         (id: number, indx: number) =>
@@ -49,9 +49,9 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-export const getSingleProduct = createAsyncThunk<any, string>(
+export const getSingleProduct = createAsyncThunk(
   "allproducts/getSingleProduct",
-  async (id) => {
+  async (id: string) => {
     const res = await bazarApi.get(`products/${id}`);
     return res.data;
   }
@@ -74,7 +74,6 @@ export type Data = {
   phone: string;
   products: number[];
   when: string;
-  email: string;
 };
 
 export const postCheckout = createAsyncThunk(

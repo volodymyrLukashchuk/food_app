@@ -4,13 +4,16 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-import { signUp } from "../../features/redux/user/userThunkActions";
+import {
+  ISignUpModal,
+  signUp,
+} from "../../features/redux/user/userThunkActions";
 
 import "./Modal.css";
 import "react-toastify/dist/ReactToastify.css";
 
-const SignUpModal = ({ closeModal }) => {
-  const dispatch = useDispatch();
+const SignUpModal: React.FC<ISignUpModal> = ({ closeModal }) => {
+  const dispatch: any = useDispatch();
 
   const formik = useFormik({
     initialValues: {

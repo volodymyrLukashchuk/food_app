@@ -1,9 +1,9 @@
 import bazarApi from "../../api/bazarApi";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-export const googleLogin: any = createAsyncThunk(
+export const googleLogin = createAsyncThunk(
   "token/getToken",
-  async (accessToken) => {
+  async (accessToken: string | null) => {
     const res = await bazarApi.get(
       `auth/google/callback?access_token=${accessToken}`
     );
@@ -11,12 +11,34 @@ export const googleLogin: any = createAsyncThunk(
   }
 );
 
-export const signIn = createAsyncThunk("signin/getSignin", async (item) => {
-  const res = await bazarApi.post("auth/local/", item);
-  return res.data;
-});
+interface ItemSignIn {
+  identifier: string;
+  password: string;
+}
 
-export const signUp = createAsyncThunk("signUp/getSignUp", async (item) => {
-  const res = await bazarApi.post("auth/local/register", item);
-  return res.data;
-});
+interface ItemSignUp {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface ISignUpModal {
+  closeModal(): void;
+}
+
+export const signIn = createAsyncThunk(
+  "signin/getSignin",
+  async (item: ItemSignIn) => {
+    const res = await bazarApi.post("auth/local/", item);
+    return res.data;
+  }
+);
+
+export const signUp = createAsyncThunk(
+  "signUp/getSignUp",
+  async (item: ItemSignUp) => {
+    const res = await bazarApi.post("auth/local/register", item);
+    return res.data;
+  }
+);

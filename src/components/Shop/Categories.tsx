@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { HiMinus } from "react-icons/hi";
@@ -12,19 +12,25 @@ import {
   getCategories,
   getProducts,
 } from "../../features/redux/bazar/bazarThunkActions";
+import { DataCategory } from "../../features/extraData";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const Categories = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategoriesSelector);
-  const [activeCategoriesIds, setActiveCategoriesIds] = useState([]);
-  const [activeChildCategoriesIds, setActiveChildCategoriesIds] = useState([]);
+  const [activeCategoriesIds, setActiveCategoriesIds] = useState<Array<number>>(
+    []
+  );
+  const [activeChildCategoriesIds, setActiveChildCategoriesIds] = useState<
+    Array<number>
+  >([]);
 
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getAllProducts());
   }, []);
 
-  const handleCategoryClick = (categoryId) => {
+  const handleCategoryClick = (categoryId: number) => {
     if (activeCategoriesIds.includes(categoryId)) {
       setActiveCategoriesIds(
         activeCategoriesIds.filter((id) => categoryId !== id)
@@ -42,7 +48,7 @@ const Categories = () => {
     const activeCategoriesWithoutChild = activeCategories.filter(
       (categoryData) => {
         return categoryData.childCategories.every(
-          (c) => !activeChildCategoriesIds.includes(c.id)
+          (c: DataCategory) => !activeChildCategoriesIds.includes(c.id)
         );
       }
     );
@@ -53,7 +59,7 @@ const Categories = () => {
     dispatch(getProducts([...activeChildCategoriesIds, ...additionalChildren]));
   }, [activeCategoriesIds, categories, activeChildCategoriesIds, dispatch]);
 
-  const handleChildClick = (categoryId) => {
+  const handleChildClick = (categoryId: number) => {
     if (activeChildCategoriesIds.includes(categoryId)) {
       setActiveChildCategoriesIds(
         activeChildCategoriesIds.filter((id) => categoryId !== id)
@@ -63,7 +69,7 @@ const Categories = () => {
     }
   };
 
-  const renderMainCategories = (category) => {
+  const renderMainCategories = (category: DataCategory) => {
     const handleMainCategory = () => handleCategoryClick(category.id);
 
     return (
@@ -73,8 +79,8 @@ const Categories = () => {
       >
         <FontAwesomeIcon
           className="category-icons"
-          key={icons.find((i) => i.id === category.id).id}
-          icon={icons.find((i) => i.id === category.id).src}
+          key={icons.find((i) => i.id === category.id)?.id}
+          icon={icons.find((i) => i.id === category.id)?.src as IconProp}
         />
 
         {category.title}
@@ -82,7 +88,7 @@ const Categories = () => {
     );
   };
 
-  const renderChildCategories = (item) => {
+  const renderChildCategories = (item: DataCategory) => {
     const handleChildCategory = () => handleChildClick(item.id);
 
     return (
@@ -105,7 +111,7 @@ const Categories = () => {
             {renderMainCategories(category)}
             {activeCategoriesIds.includes(category.id) && (
               <div>
-                {category.childCategories.map((item) => {
+                {category.childCategories.map((item: DataCategory) => {
                   return renderChildCategories(item);
                 })}
               </div>

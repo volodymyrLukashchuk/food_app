@@ -1,9 +1,13 @@
 import React from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { ButtonBack, ButtonNext } from "pure-react-carousel";
-import { ICoupon } from "../Coupon/Coupon";
+import { ICoupon } from "../../features/redux/bazar/bazarTypes";
 
-const SingleCoupon: React.FC<{ coupon: ICoupon }> = ({ coupon }) => {
+interface ISingleCoupon {
+  coupon: ICoupon;
+}
+
+const SingleCoupon: React.FC<ISingleCoupon> = ({ coupon }) => {
   return (
     <>
       <div

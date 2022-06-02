@@ -1,8 +1,54 @@
 import { createSlice, SliceCaseReducers } from "@reduxjs/toolkit";
 
+export interface IAddress {
+  setShowNewAddressForm(showNewAddressForm: boolean): void;
+  showNewAddressForm: boolean;
+  showOrder: boolean;
+  setShowOrder(showOrder: boolean): void;
+  allAddresses: Array<Address>;
+  setAllAddresses(allAddresses: Array<Address>): void;
+}
+
+export interface INum {
+  number: string;
+  numberTitle: string;
+}
+
+export interface INumber {
+  setShowNewNumberForm(showNewNumberForm: boolean): void;
+  showNewNumberForm: boolean;
+  showOrder: boolean;
+  setShowOrder(showOrder: boolean): void;
+  allNumbers: Array<Number>;
+  setAllNumbers(allNumbers: Array<Number>): void;
+}
+
+export interface IAdd {
+  addressTitle: string;
+  addresses: string;
+}
+
 export type Item = {
   id: number;
   quantity: number;
+};
+
+export type Address = {
+  address: string;
+  id: string;
+  title: string;
+};
+
+export type Time = {
+  description: string;
+  id: number;
+  title: string;
+};
+
+export type Number = {
+  id: string;
+  num: string;
+  title: string;
 };
 
 type Cart = {

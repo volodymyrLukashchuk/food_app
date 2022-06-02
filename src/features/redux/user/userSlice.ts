@@ -15,7 +15,7 @@ export type User = {
   email: string;
   id: number;
   provider: string;
-  role: any;
+  role: {};
   updated_at: string;
   updated_by: null;
   username: string;

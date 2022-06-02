@@ -7,10 +7,12 @@ import { cartActions } from "../../features/redux/cart/cartSlice";
 import { toast } from "react-toastify";
 import { Products } from "../../features/redux/bazar/bazarSlice";
 
-const AddToCartButton: React.FC<{
+interface IProps {
   product: Products;
   singleProduct: Products;
-}> = ({ product, singleProduct }) => {
+}
+
+const AddToCartButton: React.FC<IProps> = ({ product, singleProduct }) => {
   const { pathname } = useLocation();
   const user = useSelector(userSelector);
   const dispatch = useDispatch();

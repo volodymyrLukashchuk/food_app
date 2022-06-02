@@ -1,3 +1,4 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faHeartbeat,
   faLemon,
@@ -11,7 +12,7 @@ import {
   faGlassMartiniAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const MODAL_CONFIG = {
+export const MODAL_CONFIG: { [index: string]: any } = {
   signup: {
     header: "Sign Up",
     subHeader: "Welcome",
@@ -68,8 +69,22 @@ export const timeBot = [
   },
 ];
 
-export const icons = [
-  { id: 1, src: faLemon },
+export type DataCategory = {
+  id: number;
+  title: string;
+  childCategories: {
+    id: number;
+    title: string;
+  };
+};
+
+export type Icon = {
+  id: number;
+  src: IconProp;
+};
+
+export const icons: Icon[] = [
+  { id: 1, src: faLemon as IconProp },
   { id: 4, src: faDrumstickBite },
   { id: 7, src: faCookieBite },
   { id: 16, src: faPaw },

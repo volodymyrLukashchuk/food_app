@@ -5,7 +5,11 @@ import { useParams } from "react-router";
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import { Products } from "../../features/redux/bazar/bazarSlice";
 
-const SingleCard: React.FC<{ product: Products }> = ({ product }) => {
+interface IProps {
+  product: Products;
+}
+
+const SingleCard: React.FC<IProps> = ({ product }) => {
   const { id } = useParams<{ id: string }>();
 
   return (

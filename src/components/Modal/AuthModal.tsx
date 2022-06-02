@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactDom from "react-dom";
 
 import SignUpModal from "./SignUpModal";
@@ -8,14 +8,15 @@ import { MODAL_CONFIG } from "../../features/extraData";
 
 import { ImFacebook2 } from "react-icons/im";
 import { BsGoogle } from "react-icons/bs";
+import { ISignUpModal } from "../../features/redux/user/userThunkActions";
 
-const MODAL_STATE = {
-  SIGNUP: "signup",
-  SIGNIN: "signin",
-  PASSWORD: "password",
-};
+enum MODAL_STATE {
+  SIGNUP = "signup",
+  SIGNIN = "signin",
+  PASSWORD = "password",
+}
 
-const AuthModal = ({ closeModal }) => {
+const AuthModal: React.FC<ISignUpModal> = ({ closeModal }) => {
   const [modalState, setModalState] = useState(MODAL_STATE.SIGNUP);
 
   const googleRedirect = () => {
@@ -87,7 +88,7 @@ const AuthModal = ({ closeModal }) => {
         ) : null}
         <div className="login-text">
           <p>
-            {MODAL_CONFIG[modalState]?.footer}{" "}
+            {MODAL_CONFIG[modalState]?.footer}
             <button onClick={signUpModalRedirect}>
               {MODAL_CONFIG[modalState]?.footerButton}
             </button>
@@ -114,11 +115,15 @@ const AuthModal = ({ closeModal }) => {
     );
   };
 
-  const handleOutsideClick = (event) => {
+  const handleOutsideClick: any = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.classList.contains("overlay")) {
       closeModal();
     }
   };
+
+  const portalDiv = document.getElementById("portal") as HTMLElement;
 
   return (
     <div>
@@ -133,7 +138,7 @@ const AuthModal = ({ closeModal }) => {
             {renderSignInModalBottom()}
           </div>
         </div>,
-        document.getElementById("portal")
+        portalDiv
       )}
     </div>
   );

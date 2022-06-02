@@ -4,7 +4,11 @@ import SingleCard from "./SingleCard";
 import "../Shop/Shop.css";
 import { Products } from "../../features/redux/bazar/bazarSlice";
 
-const Card: React.FC<{ products: Products[] }> = ({ products }) => {
+interface IProps {
+  products: Products[];
+}
+
+const Card: React.FC<IProps> = ({ products }) => {
   return (
     <div className="container">
       {products instanceof Array

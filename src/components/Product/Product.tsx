@@ -16,7 +16,7 @@ import { userSelector } from "../../features/redux/user/userSelector";
 import "./Product.css";
 import Card from "../Card/Card";
 import { RootState } from "../../features/redux/store";
-import { Products } from "../../features/redux/bazar/bazarSlice";
+import { Pics, Products } from "../../features/redux/bazar/bazarSlice";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
@@ -45,7 +45,7 @@ const Product = () => {
     dispatch(cartActions.addItemsToCart(item));
   };
 
-  const handleAddItemToCart = (singleProduct: any) => {
+  const handleAddItemToCart = (singleProduct: Products) => {
     addToCartHandler(singleProduct.id);
     if (user) {
       addToCartHandler(singleProduct.id);
@@ -58,7 +58,7 @@ const Product = () => {
     setMainPic(null);
   };
 
-  const renderMainPic = (pic: any) => {
+  const renderMainPic = (pic: Pics) => {
     const changeMainPic = () =>
       setMainPic(`https://pickbazar.batarin.dev${pic.url}`);
 
@@ -106,7 +106,7 @@ const Product = () => {
             </div>
             <div className="description-right-bottom">
               <div className="bottom-btn">
-                <button onClick={handleAddItemToCart}>
+                <button onClick={() => handleAddItemToCart}>
                   <i>
                     <IoBagRemove />
                   </i>

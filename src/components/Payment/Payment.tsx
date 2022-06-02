@@ -9,13 +9,13 @@ import {
 
 import "./Payment.css";
 
-type IState = {
+interface IState {
   address: string;
   email: string;
   phone: string;
   products: number[];
   when: string;
-};
+}
 
 const Payment = () => {
   const data = useLocation<IState>();

@@ -8,8 +8,8 @@ import {
   getCard,
   getLastProducts,
   getSingleProduct,
-  postCheckout,
 } from "./bazarThunkActions";
+import { ICoupon } from "./bazarTypes";
 
 export type Products = {
   category: {
@@ -27,19 +27,68 @@ export type Products = {
   finalPrice: number;
   id: number;
   name: string;
-  photos: any[];
+  photos: {
+    alternativeText: string;
+    caption: string;
+    created_at: string;
+    created_by: number;
+    ext: string;
+    formats: {};
+    hash: string;
+    height: number;
+    id: number;
+    mime: string;
+    name: string;
+    previewUrl: null;
+    provider: string;
+    provider_metadata: null;
+    size: number;
+    updated_at: string;
+    updated_by: number;
+    url: string;
+    width: number;
+  }[];
   price: number;
   size: string;
 };
 
+export type Pics = {
+  alternativeText: string;
+  caption: string;
+  created_at: string;
+  created_by: number;
+  ext: string;
+  formats: {};
+  hash: string;
+  height: number;
+  id: number;
+  mime: string;
+  name: string;
+  previewUrl: null;
+  provider: string;
+  provider_metadata: null;
+  size: number;
+  updated_at: string;
+  updated_by: number;
+  url: string;
+};
+
+type Categories = {
+  childCategories: {
+    id: number;
+    title: string;
+  };
+  id: number;
+  title: "Fruits & Vegetables";
+}[];
+
 type Bazar = {
-  coupons: Array<any>;
-  categories: Array<any>;
+  coupons: Array<ICoupon>;
+  categories: Array<Categories | any>;
   products: Array<Products>;
   allProducts: Array<Products>;
   card: Array<Products>;
-  lastProducts: Array<any>;
-  checkout: Array<any>;
+  lastProducts: Array<Products>;
   page: number;
 };
 
@@ -50,7 +99,6 @@ const initialState = {
   allProducts: [],
   card: [],
   lastProducts: [],
-  checkout: [],
   page: 0,
 };
 
@@ -80,9 +128,6 @@ const bazarSlice = createSlice<Bazar, SliceCaseReducers<Bazar>>({
     builder.addCase(getLastProducts.fulfilled, (state, action) => {
       state.products = state.products.concat(action.payload.newProducts);
       state.page = action.payload.newPage;
-    });
-    builder.addCase(postCheckout.fulfilled, (state, action) => {
-      state.checkout = action.payload;
     });
   },
 });

@@ -2,10 +2,13 @@ import React from "react";
 
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { signIn } from "../../features/redux/user/userThunkActions";
+import {
+  ISignUpModal,
+  signIn,
+} from "../../features/redux/user/userThunkActions";
 
-const SignInModal = ({ closeModal }) => {
-  const dispatch = useDispatch();
+const SignInModal: React.FC<ISignUpModal> = ({ closeModal }) => {
+  const dispatch: any = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +34,7 @@ const SignInModal = ({ closeModal }) => {
             type="text"
             placeholder="Your username"
             onChange={formik.handleChange}
-            value={formik.values.username}
+            value={formik.values.identifier}
           />
           <input
             id="password"

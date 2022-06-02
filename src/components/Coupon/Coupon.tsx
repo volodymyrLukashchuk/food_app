@@ -1,34 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
 
 import SingleCoupon from "./SingleCoupon";
 import { getCoupons } from "../../features/redux/bazar/bazarThunkActions";
 import { getCouponsSelector } from "../../features/redux/bazar/bazarSelector";
-
+import { ICoupon } from "../../features/redux/bazar/bazarTypes";
 import "./Coupon.css";
-
-export type ICoupon = {
-  buttonText: string;
-  created_at: string;
-  created_by: {
-    id: number;
-    firstname: string;
-    lastname: string;
-    username: null;
-  };
-  description: string;
-  gradientColors: { start: string; end: string };
-  id: number;
-  title: string;
-  updated_at: string;
-  updated_by: {
-    id: number;
-    firstname: string;
-    lastname: string;
-    username: null;
-  };
-};
 
 const Coupon = () => {
   const coupons = useSelector(getCouponsSelector);

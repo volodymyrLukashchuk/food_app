@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm, useWatch } from "react-hook-form/";
+import { useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -7,12 +7,14 @@ import {
   postCheckout,
 } from "../../features/redux/bazar/bazarThunkActions";
 import { timeMid, timeBot } from "../../features/extraData";
+
 import {
   cartDataSelector,
   cartItemsSelector,
   discountSelector,
   totalPriceSelector,
 } from "../../features/redux/selector";
+import { Number, Address, Time } from "../../features/redux/cart/cartSlice";
 
 import visa from "../../assets/visa.svg";
 import closeSVG from "../../assets/close.svg";
@@ -20,18 +22,16 @@ import AddressForm from "../AddressForm/AddressForm";
 import NumberForm from "../AddressForm/NumberForm";
 
 import "./Checkout.css";
-import { RootState } from "../../features/redux/store";
 
 const Checkout = () => {
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
   const [showNewNumberForm, setShowNewNumberForm] = useState(false);
   const [showOrder, setShowOrder] = useState(true);
-  const [allAddresses, setAllAddresses] = useState([]);
-  const [allNumbers, setAllNumbers] = useState([]);
+  const [allAddresses, setAllAddresses] = useState<Array<Address>>([]);
+  const [allNumbers, setAllNumbers] = useState<Array<Number>>([]);
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector<RootState, any>((state) => state.user.userData);
 
   const cartData = useSelector(cartDataSelector);
   const totalPrice = useSelector(totalPriceSelector);
@@ -58,41 +58,26 @@ const Checkout = () => {
       phone: selectedNumber.num,
       products: items,
       when: selectedTime.description,
-      email: user.email,
     };
     dispatch(postCheckout(data));
     history.push("/payment", data);
   };
 
   const deleteAddress = (add: string) => {
-    setAllAddresses(allAddresses.filter((item) => item.id !== add));
+    setAllAddresses(allAddresses.filter((item: Address) => item.id !== add));
   };
 
   const deleteNumber = (num: string) => {
-    setAllNumbers(allNumbers.filter((item) => item.id !== num));
+    setAllNumbers(allNumbers.filter((item: Number) => item.id !== num));
   };
 
-  const { control, setValue } = useForm({
+  const { control, setValue } = useForm<{
+    address: Address | null;
+    number: Number | null;
+    time: Time | null;
+  }>({
     defaultValues: { address: null, number: null, time: null },
   });
-
-  type Address = {
-    address: string;
-    id: string;
-    title: string;
-  };
-
-  type Time = {
-    description: string;
-    id: number;
-    title: string;
-  };
-
-  type Number = {
-    id: string;
-    num: string;
-    title: string;
-  };
 
   const renderAddress = (add: Address) => {
     return (
@@ -198,7 +183,6 @@ const Checkout = () => {
             <h4>John Doe</h4>
           </div>
           <div className="visa">
-            {" "}
             <img src={visa} alt="" />
             <p>Card Number</p>
             <span>
@@ -207,7 +191,6 @@ const Checkout = () => {
             <h4>John Doe</h4>
           </div>
           <div className="visa">
-            {" "}
             <img src={visa} alt="" />
             <p>Card Number</p>
             <span>
@@ -350,9 +333,16 @@ const Checkout = () => {
     );
   };
 
-  const selectedAddress = useWatch({ control, name: "address" });
-  const selectedNumber = useWatch({ control, name: "number" });
-  const selectedTime = useWatch({ control, name: "time" });
+  const selectedAddress = useWatch<any>({
+    control,
+    name: "address",
+  });
+
+  const selectedNumber = useWatch<any>({
+    control,
+    name: "number",
+  });
+  const selectedTime = useWatch<any>({ control, name: "time" });
 
   return (
     <div className="checkout">
