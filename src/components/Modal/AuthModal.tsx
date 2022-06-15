@@ -16,7 +16,7 @@ enum MODAL_STATE {
   PASSWORD = "password",
 }
 
-const AuthModal: React.FC<ISignUpModal> = ({ closeModal }) => {
+const AuthModal = ({ closeModal }: ISignUpModal) => {
   const [modalState, setModalState] = useState(MODAL_STATE.SIGNUP);
 
   const googleRedirect = () => {
@@ -115,10 +115,8 @@ const AuthModal: React.FC<ISignUpModal> = ({ closeModal }) => {
     );
   };
 
-  const handleOutsideClick: any = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (event.target.classList.contains("overlay")) {
+  const handleOutsideClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLDivElement).classList.contains("overlay")) {
       closeModal();
     }
   };

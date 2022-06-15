@@ -25,7 +25,15 @@ type itemCart = {
     name: string;
     price: number;
     size: string;
-    photos: any[];
+    photos: {
+      alternativeText: string;
+      caption: string;
+      formats: {};
+      hash: string;
+      height: number;
+      url: string;
+      width: number;
+    }[];
   };
 };
 
@@ -81,7 +89,7 @@ const SideNav = () => {
             <IoMdClose onClick={showSideNav} />
           </div>
         </div>
-        {cartData.map((item: any) => renderCartItems(item))}
+        {cartData.map((item) => renderCartItems(item))}
         {cartItems.length > 0 ? (
           ""
         ) : (

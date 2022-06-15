@@ -28,7 +28,7 @@ const Header = () => {
   } as React.CSSProperties;
 
   const handleLogout = () => {
-    dispatch(userActions.logout());
+    dispatch(userActions.logout(true));
     setDropdown(!dropdown);
     dispatch(cartActions.clearCart(true));
     setShowModal(false);

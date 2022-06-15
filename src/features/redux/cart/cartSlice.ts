@@ -19,14 +19,14 @@ export interface INumber {
   showNewNumberForm: boolean;
   showOrder: boolean;
   setShowOrder(showOrder: boolean): void;
-  allNumbers: Array<Number>;
-  setAllNumbers(allNumbers: Array<Number>): void;
+  allNumbers: Array<PhoneNumber>;
+  setAllNumbers(allNumbers: Array<PhoneNumber>): void;
 }
 
-export interface IAdd {
+export interface AddressFormDto {
   addressTitle: string;
   addresses: string;
-}
+};
 
 export type Item = {
   id: number;
@@ -45,7 +45,7 @@ export type Time = {
   title: string;
 };
 
-export type Number = {
+export type PhoneNumber = {
   id: string;
   num: string;
   title: string;

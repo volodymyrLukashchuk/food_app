@@ -1,10 +1,21 @@
-import { AnyAction, createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  AnyAction,
+  createSlice,
+  isAnyOf,
+  SliceCaseReducers,
+} from "@reduxjs/toolkit";
 import { signIn, googleLogin, signUp } from "./userThunkActions";
 
 const initialState = {
   userData: null,
   token: null,
   error: null,
+};
+
+export type UserState = {
+  userData: null | User;
+  token: null | String;
+  error: null | String;
 };
 
 export type User = {
@@ -21,7 +32,7 @@ export type User = {
   username: string;
 };
 
-const userSlice = createSlice({
+const userSlice = createSlice<UserState, SliceCaseReducers<UserState>>({
   name: "user",
   initialState,
   reducers: {

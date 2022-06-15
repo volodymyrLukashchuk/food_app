@@ -10,7 +10,7 @@ export const cartDataSelector = createSelector(
   allProductsSelector,
   (items, products) => {
     return items.map((item) => ({
-      itemData: products.find((product) => product.id === item.id),
+      itemData: products.find((product) => product.id === item.id)!,
       ...item,
     }));
   }
@@ -23,25 +23,27 @@ export const totalQuantitySelector = createSelector(
   }
 );
 
-type CartData = {
-  id: number;
-  itemData: {
-    category: {
-      id: number;
-      parentCategory: {
-        id: number;
-        title: string;
-      };
-    };
-    description: string;
-    discount: null;
-    finalPrice: number;
+export type ItemData = {
+  category: {
     id: number;
-    name: string;
-    photos: Array<{}>;
-    price: number;
-    size: string;
+    parentCategory: {
+      id: number;
+      title: string;
+    };
   };
+  description: string;
+  discount: null;
+  finalPrice: number;
+  id: number;
+  name: string;
+  photos: Array<{}>;
+  price: number;
+  size: string;
+};
+
+export type CartData = {
+  id: number;
+  itemData: ItemData;
   quantity: 1;
 }[];
 
@@ -49,7 +51,7 @@ export const totalPriceSelector = createSelector(
   cartDataSelector,
   (cartData) => {
     return cartData.reduce(
-      (total, item: any) => total + item.itemData.price * item.quantity,
+      (total, item) => total + item.itemData.price * item.quantity,
       0
     );
   }
@@ -57,7 +59,7 @@ export const totalPriceSelector = createSelector(
 
 export const discountSelector = createSelector(cartDataSelector, (cartData) => {
   return cartData.reduce(
-    (total, item: any) => item.itemData.finalPrice * item.quantity,
+    (total, item) => item.itemData.finalPrice * item.quantity,
     0
   );
 });

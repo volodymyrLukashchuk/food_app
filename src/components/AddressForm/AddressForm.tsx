@@ -2,17 +2,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import clsx from "clsx";
-import { IAdd, IAddress } from "../../features/redux/cart/cartSlice";
+import { AddressFormDto, IAddress } from "../../features/redux/cart/cartSlice";
 
-const AddressForm: React.FC<IAddress> = ({
+const AddressForm = ({
   allAddresses,
   setAllAddresses,
   setShowNewAddressForm,
   showNewAddressForm,
   showOrder,
   setShowOrder,
-}) => {
-  const addressFormSubmit = (data: IAdd) => {
+}: IAddress) => {
+  const addressFormSubmit = (data: AddressFormDto) => {
     setShowOrder(!showOrder);
     setShowNewAddressForm(!showNewAddressForm);
 
@@ -29,7 +29,7 @@ const AddressForm: React.FC<IAddress> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IAdd>();
+  } = useForm<AddressFormDto>();
 
   const addressStyle = clsx({
     "new-address-form": errors,

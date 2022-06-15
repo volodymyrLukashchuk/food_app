@@ -16,12 +16,12 @@ import { userSelector } from "../../features/redux/user/userSelector";
 import "./Product.css";
 import Card from "../Card/Card";
 import { RootState } from "../../features/redux/store";
-import { Pics, Products } from "../../features/redux/bazar/bazarSlice";
+import { Pics, IProduct } from "../../features/redux/bazar/bazarSlice";
 
 const Product = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
-  const singleProduct = useSelector<RootState, Products | undefined>((state) =>
+  const singleProduct = useSelector<RootState, IProduct | undefined>((state) =>
     state.bazar.allProducts.find((p) => p.id === +id)
   );
 
@@ -45,7 +45,7 @@ const Product = () => {
     dispatch(cartActions.addItemsToCart(item));
   };
 
-  const handleAddItemToCart = (singleProduct: Products) => {
+  const handleAddItemToCart = (singleProduct: IProduct) => {
     addToCartHandler(singleProduct.id);
     if (user) {
       addToCartHandler(singleProduct.id);

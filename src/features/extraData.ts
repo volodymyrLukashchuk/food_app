@@ -12,7 +12,7 @@ import {
   faGlassMartiniAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const MODAL_CONFIG: { [index: string]: any } = {
+export const MODAL_CONFIG = {
   signup: {
     header: "Sign Up",
     subHeader: "Welcome",
@@ -69,14 +69,6 @@ export const timeBot = [
   },
 ];
 
-export type DataCategory = {
-  id: number;
-  title: string;
-  childCategories: {
-    id: number;
-    title: string;
-  };
-};
 
 export type Icon = {
   id: number;

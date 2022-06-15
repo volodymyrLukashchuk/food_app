@@ -13,7 +13,7 @@ import "./Modal.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const SignUpModal: React.FC<ISignUpModal> = ({ closeModal }) => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -33,13 +33,13 @@ const SignUpModal: React.FC<ISignUpModal> = ({ closeModal }) => {
         password: values.password,
         confirmPassword: values.confirmPassword,
       };
-      const response = await dispatch(signUp(item));
+      const res: any = await dispatch(signUp(item));
 
-      if (!response.error) {
+      if (!res.error) {
         toast.success("Registration successfull!!");
         closeModal();
       } else {
-        toast.error(response.error.message);
+        toast.error(res.error.message);
       }
     },
   });

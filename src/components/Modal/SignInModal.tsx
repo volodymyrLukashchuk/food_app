@@ -8,7 +8,7 @@ import {
 } from "../../features/redux/user/userThunkActions";
 
 const SignInModal: React.FC<ISignUpModal> = ({ closeModal }) => {
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -17,7 +17,7 @@ const SignInModal: React.FC<ISignUpModal> = ({ closeModal }) => {
     },
     onSubmit: async (values) => {
       const item = { identifier: values.identifier, password: values.password };
-      const res = await dispatch(signIn(item));
+      const res: any = await dispatch(signIn(item));
       if (!res.error) {
         closeModal();
       }

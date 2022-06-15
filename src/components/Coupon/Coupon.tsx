@@ -29,22 +29,22 @@ const Coupon = () => {
       <Slider>
         <Slide index={0}>
           <div className="coupons">
-            {coupons.map((coupon: ICoupon, i: number) => (
-              <SingleCoupon key={i} coupon={coupon} />
+            {coupons.map((coupon: ICoupon, x: number) => (
+              <SingleCoupon key={x} coupon={coupon} />
             ))}
           </div>
         </Slide>
         <Slide index={1}>
           <div className="coupons">
-            {coupons.map((coupon: ICoupon, i: number) => (
-              <SingleCoupon key={i} coupon={coupon} />
+            {coupons.map((coupon: ICoupon, x: number) => (
+              <SingleCoupon key={x} coupon={coupon} />
             ))}
           </div>
         </Slide>
         <Slide index={2}>
           <div className="coupons">
-            {coupons.map((coupon: ICoupon, i: number) => (
-              <SingleCoupon key={i} coupon={coupon} />
+            {coupons.map((coupon: ICoupon, x: number) => (
+              <SingleCoupon key={x} coupon={coupon} />
             ))}
           </div>
         </Slide>

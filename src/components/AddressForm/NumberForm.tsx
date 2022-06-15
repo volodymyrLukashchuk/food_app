@@ -2,18 +2,16 @@ import React from "react";
 import clsx from "clsx";
 import { v4 as uuidv4 } from "uuid";
 import { useForm } from "react-hook-form";
-import { INumber,INum } from "../../features/redux/cart/cartSlice";
+import { INumber, INum } from "../../features/redux/cart/cartSlice";
 
-
-
-const NumberForm: React.FC<INumber> = ({
+const NumberForm = ({
   allNumbers,
   setAllNumbers,
   showOrder,
   setShowOrder,
   showNewNumberForm,
   setShowNewNumberForm,
-}) => {
+}: INumber) => {
   const addressFormSubmit = (data: INum) => {
     setShowNewNumberForm(!showNewNumberForm);
     setShowOrder(!showOrder);

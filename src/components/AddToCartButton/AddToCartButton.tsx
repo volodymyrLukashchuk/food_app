@@ -5,14 +5,14 @@ import { userSelector } from "../../features/redux/user/userSelector";
 import { useLocation } from "react-router-dom";
 import { cartActions } from "../../features/redux/cart/cartSlice";
 import { toast } from "react-toastify";
-import { Products } from "../../features/redux/bazar/bazarSlice";
+import { IProduct } from "../../features/redux/bazar/bazarSlice";
 
 interface IProps {
-  product: Products;
-  singleProduct: Products;
+  product: IProduct;
+  singleProduct: IProduct;
 }
 
-const AddToCartButton: React.FC<IProps> = ({ product, singleProduct }) => {
+const AddToCartButton = ({ product, singleProduct }: IProps) => {
   const { pathname } = useLocation();
   const user = useSelector(userSelector);
   const dispatch = useDispatch();

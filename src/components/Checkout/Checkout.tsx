@@ -14,7 +14,11 @@ import {
   discountSelector,
   totalPriceSelector,
 } from "../../features/redux/selector";
-import { Number, Address, Time } from "../../features/redux/cart/cartSlice";
+import {
+  PhoneNumber,
+  Address,
+  Time,
+} from "../../features/redux/cart/cartSlice";
 
 import visa from "../../assets/visa.svg";
 import closeSVG from "../../assets/close.svg";
@@ -28,7 +32,7 @@ const Checkout = () => {
   const [showNewNumberForm, setShowNewNumberForm] = useState(false);
   const [showOrder, setShowOrder] = useState(true);
   const [allAddresses, setAllAddresses] = useState<Array<Address>>([]);
-  const [allNumbers, setAllNumbers] = useState<Array<Number>>([]);
+  const [allNumbers, setAllNumbers] = useState<Array<PhoneNumber>>([]);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -51,7 +55,10 @@ const Checkout = () => {
   };
 
   const checkoutHandler = async () => {
-    const items = cartItems.map((item: { id: number }) => item.id);
+    if (!selectedAddress || !selectedNumber || !selectedTime) {
+      return;
+    }
+    const items = cartItems.map((item) => item.id);
 
     let data: Data = {
       address: selectedAddress.address,
@@ -68,41 +75,41 @@ const Checkout = () => {
   };
 
   const deleteNumber = (num: string) => {
-    setAllNumbers(allNumbers.filter((item: Number) => item.id !== num));
+    setAllNumbers(allNumbers.filter((item: PhoneNumber) => item.id !== num));
   };
 
   const { control, setValue } = useForm<{
     address: Address | null;
-    number: Number | null;
+    number: PhoneNumber | null;
     time: Time | null;
   }>({
     defaultValues: { address: null, number: null, time: null },
   });
 
-  const renderAddress = (add: Address) => {
+  const renderAddress = (addOn: Address) => {
     return (
-      <div key={add.id}>
+      <div key={addOn.id}>
         <div
           onClick={() => {
-            setValue("address", add);
+            setValue("address", addOn);
           }}
           className={
-            selectedAddress?.id === add.id
+            selectedAddress?.id === addOn.id
               ? "address-bottom-box actives"
               : "address-bottom-box"
           }
         >
           <div className="box-top">
-            <p>{add.title}</p>
+            <p>{addOn.title}</p>
             <div className="address-icons">
               <img
-                onClick={() => deleteAddress(add.id)}
+                onClick={() => deleteAddress(addOn.id)}
                 src={closeSVG}
                 alt=""
               />
             </div>
           </div>
-          <p>{add.address}</p>
+          <p>{addOn.address}</p>
         </div>
       </div>
     );
@@ -140,7 +147,7 @@ const Checkout = () => {
     );
   };
 
-  const renderNumber = (num: Number) => {
+  const renderNumber = (num: PhoneNumber) => {
     return (
       <div key={num.id}>
         <div
@@ -271,23 +278,25 @@ const Checkout = () => {
             <div className="top">
               <p>Your Order</p>
             </div>
-            {cartData.map((data: any) => (
-              <div key={data.id} className="items-form">
-                <div className="form">
-                  <div className="item">
-                    <p>
-                      <strong>{data.quantity}</strong>&nbsp;&nbsp;&nbsp; x
-                      &nbsp;&nbsp;&nbsp; {data.itemData.name} |{" "}
-                      {data.itemData.size}
-                    </p>
+            {cartData
+              .filter((cartItem) => cartItem.itemData)
+              .map((data) => (
+                <div key={data.id} className="items-form">
+                  <div className="form">
+                    <div className="item">
+                      <p>
+                        <strong>{data.quantity}</strong>&nbsp;&nbsp;&nbsp; x
+                        &nbsp;&nbsp;&nbsp; {data.itemData.name} |{" "}
+                        {data.itemData.size}
+                      </p>
+                    </div>
+                    <div className="price">
+                      <p>${formatter.format(data.itemData.price || 0)}</p>
+                    </div>
                   </div>
-                  <div className="price">
-                    <p>${formatter.format(data.itemData.price)}</p>
-                  </div>
+                  <hr />
                 </div>
-                <hr />
-              </div>
-            ))}
+              ))}
 
             <div className="bottoms">
               <div className="item">
@@ -333,16 +342,16 @@ const Checkout = () => {
     );
   };
 
-  const selectedAddress = useWatch<any>({
+  const selectedAddress = useWatch({
     control,
     name: "address",
   });
 
-  const selectedNumber = useWatch<any>({
+  const selectedNumber = useWatch({
     control,
     name: "number",
   });
-  const selectedTime = useWatch<any>({ control, name: "time" });
+  const selectedTime = useWatch({ control, name: "time" });
 
   return (
     <div className="checkout">

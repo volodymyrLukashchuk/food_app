@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router";
 
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
-import { Products } from "../../features/redux/bazar/bazarSlice";
+import { IProduct } from "../../features/redux/bazar/bazarSlice";
 
 interface IProps {
-  product: Products;
+  product: IProduct;
 }
 
 const SingleCard: React.FC<IProps> = ({ product }) => {

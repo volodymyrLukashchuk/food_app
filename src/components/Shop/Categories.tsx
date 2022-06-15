@@ -12,8 +12,9 @@ import {
   getCategories,
   getProducts,
 } from "../../features/redux/bazar/bazarThunkActions";
-import { DataCategory } from "../../features/extraData";
+
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { Category, ChildCategory } from "../../features/redux/bazar/bazarSlice";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -42,13 +43,13 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    const activeCategories = activeCategoriesIds.map((c) =>
-      categories.find((category) => category.id === c)
+    const activeCategories = activeCategoriesIds.map(
+      (c) => categories.find((category) => category.id === c)!
     );
     const activeCategoriesWithoutChild = activeCategories.filter(
       (categoryData) => {
         return categoryData.childCategories.every(
-          (c: DataCategory) => !activeChildCategoriesIds.includes(c.id)
+          (c) => !activeChildCategoriesIds.includes(c.id)
         );
       }
     );
@@ -69,7 +70,7 @@ const Categories = () => {
     }
   };
 
-  const renderMainCategories = (category: DataCategory) => {
+  const renderMainCategories = (category: Category) => {
     const handleMainCategory = () => handleCategoryClick(category.id);
 
     return (
@@ -88,7 +89,7 @@ const Categories = () => {
     );
   };
 
-  const renderChildCategories = (item: DataCategory) => {
+  const renderChildCategories = (item: ChildCategory) => {
     const handleChildCategory = () => handleChildClick(item.id);
 
     return (
@@ -111,7 +112,7 @@ const Categories = () => {
             {renderMainCategories(category)}
             {activeCategoriesIds.includes(category.id) && (
               <div>
-                {category.childCategories.map((item: DataCategory) => {
+                {category.childCategories.map((item) => {
                   return renderChildCategories(item);
                 })}
               </div>

@@ -11,7 +11,7 @@ import {
 } from "./bazarThunkActions";
 import { ICoupon } from "./bazarTypes";
 
-export type Products = {
+export interface IProduct {
   category: {
     id: number;
     title: string;
@@ -50,7 +50,7 @@ export type Products = {
   }[];
   price: number;
   size: string;
-};
+}
 
 export type Pics = {
   alternativeText: string;
@@ -73,22 +73,24 @@ export type Pics = {
   url: string;
 };
 
-type Categories = {
-  childCategories: {
+export type Category = {
+  id: number;
+  title: string;
+  childCategories: Array<{
     id: number;
     title: string;
-  };
-  id: number;
-  title: "Fruits & Vegetables";
-}[];
+  }>;
+};
+
+export type ChildCategory = Omit<Category, "childCategories">;
 
 type Bazar = {
   coupons: Array<ICoupon>;
-  categories: Array<Categories | any>;
-  products: Array<Products>;
-  allProducts: Array<Products>;
-  card: Array<Products>;
-  lastProducts: Array<Products>;
+  categories: Array<Category>;
+  products: Array<IProduct>;
+  allProducts: Array<IProduct>;
+  card: Array<IProduct>;
+  lastProducts: Array<IProduct>;
   page: number;
 };
 
